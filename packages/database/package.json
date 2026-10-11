@@ -1,0 +1,22 @@
+{
+  "name": "@salamanda/database",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@salamanda/shared-types": "workspace:*",
+    "drizzle-orm": "^0.39.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "drizzle-kit": "^0.30.4",
+    "typescript": "^5.8.2"
+  }
+}
