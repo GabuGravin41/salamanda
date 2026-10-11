@@ -173,6 +173,60 @@ export interface InstitutionalPlayer {
   updatedAt: string;
 }
 
+export type AllocatorCategory =
+  | 'PENSION_FUND'
+  | 'SOVEREIGN_DFI'
+  | 'PRIVATE_EQUITY'
+  | 'FAMILY_OFFICE'
+  | 'SACCO_APEX';
+
+export type PipelineStage =
+  | 'REVITALIZATION_AUCTION'
+  | 'DISTRESSED_DEBT_RESTRUCTURING'
+  | 'CONCESSION_BIDDING'
+  | 'EXPANSION_CAPITAL'
+  | 'GOVERNMENT_PRIVATIZATION';
+
+export interface InstitutionalAllocator {
+  id: string;
+  slug: string;
+  name: string;
+  category: AllocatorCategory;
+  aumKES: number; // Assets Under Management in KES
+  mandate: string;
+  targetAssetClasses: AssetClass[];
+  ticketSizeKES: {
+    min: number;
+    max: number;
+  };
+  geographyScope: string;
+  decisionMakers: string;
+  headquarters: string;
+  verificationLevel: VerificationLevel;
+  citations: Citation[];
+  activeDeploymentFocus: string;
+  googleMapsUrl?: string;
+}
+
+export interface DealPipelineOpportunity {
+  id: string;
+  slug: string;
+  title: string;
+  stage: PipelineStage;
+  targetSector: Sector;
+  county: string;
+  requiredCapitalKES: number;
+  impliedValuationKES?: number;
+  associatedAssetSlug?: string;
+  keyCatalyst: string;
+  riskFactor: string;
+  salamandaThesis: string;
+  verificationLevel: VerificationLevel;
+  matchingAllocators: string[]; // Allocator IDs/slugs that match mandate & ticket size
+  googleMapsUrl?: string;
+  citations: Citation[];
+}
+
 export interface MacroMetrics {
   totalAssetsTracked: number;
   totalTrackedCapitalKES: number;

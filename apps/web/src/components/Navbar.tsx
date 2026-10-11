@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Activity, BarChart3, Database, MapPin, Landmark } from 'lucide-react';
+import { ShieldCheck, Activity, BarChart3, Database, MapPin, Landmark, Layers } from 'lucide-react';
 
 export function Navbar() {
   return (
@@ -63,6 +63,13 @@ export function Navbar() {
               >
                 <BarChart3 className="w-4 h-4 text-purple-400" />
                 Power Players
+              </Link>
+              <Link
+                href="/pipeline"
+                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
+              >
+                <Layers className="w-4 h-4 text-amber-400" />
+                Deal Pipeline
               </Link>
               <Link
                 href="/sources"

@@ -7,9 +7,17 @@ import { Asset, AssetFilterOptions, MacroMetrics, AutopsyReport } from '@salaman
 export * from './schema';
 export * from './seed-data';
 export * from './seed/institutional-players';
+export * from './seed/institutional-allocators';
+export * from './seed/deal-pipeline';
 
 import { INSTITUTIONAL_PLAYERS } from './seed/institutional-players';
-import { InstitutionalPlayer } from '@salamanda/shared-types';
+import { INSTITUTIONAL_ALLOCATORS } from './seed/institutional-allocators';
+import { DEAL_PIPELINE_OPPORTUNITIES } from './seed/deal-pipeline';
+import {
+  InstitutionalPlayer,
+  InstitutionalAllocator,
+  DealPipelineOpportunity,
+} from '@salamanda/shared-types';
 
 const connectionString = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL || '';
 
@@ -86,4 +94,22 @@ export async function getInstitutionalPlayers(): Promise<InstitutionalPlayer[]> 
 export async function getInstitutionalPlayerBySlug(slug: string): Promise<InstitutionalPlayer | null> {
   const player = INSTITUTIONAL_PLAYERS.find((p) => p.slug === slug);
   return player || null;
+}
+
+export async function getInstitutionalAllocators(): Promise<InstitutionalAllocator[]> {
+  return INSTITUTIONAL_ALLOCATORS;
+}
+
+export async function getAllocatorBySlug(slug: string): Promise<InstitutionalAllocator | null> {
+  const allocator = INSTITUTIONAL_ALLOCATORS.find((a) => a.slug === slug);
+  return allocator || null;
+}
+
+export async function getDealPipeline(): Promise<DealPipelineOpportunity[]> {
+  return DEAL_PIPELINE_OPPORTUNITIES;
+}
+
+export async function getDealOpportunityBySlug(slug: string): Promise<DealPipelineOpportunity | null> {
+  const opp = DEAL_PIPELINE_OPPORTUNITIES.find((o) => o.slug === slug);
+  return opp || null;
 }
