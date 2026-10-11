@@ -1,178 +1,11 @@
-import { Asset, MacroMetrics } from '@salamanda/shared-types';
+import { Asset, MacroMetrics, AutopsyCauseCategory } from '@salamanda/shared-types';
+import { CORPORATE_AUTOPSIES } from './seed/corporate-autopsies';
+import { ACTIVE_BENCHMARKS } from './seed/active-benchmarks';
+import { LAND_CORRIDORS } from './seed/land-corridors';
+import { SOVEREIGN_INFRASTRUCTURE } from './seed/sovereign-infrastructure';
 
-export const INITIAL_ASSETS: Asset[] = [
-  {
-    id: 'ast-mobius-motors',
-    slug: 'mobius-motors',
-    name: 'Mobius Motors Limited',
-    legalName: 'Mobius Motors Kenya Limited',
-    assetClass: 'ENTERPRISE_COLLAPSED',
-    sector: 'AUTOMOTIVE_TRANSPORT',
-    subsector: 'Automotive Assembly & Engineering',
-    status: 'LIQUIDATED',
-    county: 'Nairobi',
-    headquarters: 'Sameer Industrial Park, Mombasa Road, Nairobi',
-    establishedYear: 2011,
-    defunctYear: 2024,
-    currentValuationKES: 0,
-    peakValuationKES: 3500000000, // ~KES 3.5B estimated peak enterprise valuation
-    debtExposureKES: 1100000000,   // ~KES 1.1B creditor liabilities
-    summary:
-      'Kenya’s pioneer indigenous automotive assembler designed to produce rugged, low-cost SUVs for rural African roads. Despite securing backing from Playfair Capital, Chandaria Industries, and the US DFC, the company collapsed in August 2024 due to crushing tax policy reversals, supply chain fragility, and inability to achieve unit economic scale against imported second-hand Japanese vehicles.',
-    autopsy: {
-      id: 'aut-mobius-01',
-      assetId: 'ast-mobius-motors',
-      primaryCause: 'REGULATORY_TAX_POLICY',
-      contributingFactors: [
-        'DEBT_OVERLEVERAGE',
-        'MARKET_DEMAND_SHIFT',
-        'SUPPLY_CHAIN_COLLAPSE',
-      ],
-      peakValuationKES: 3500000000,
-      debtAtCollapseKES: 1100000000,
-      jobsImpacted: 160,
-      executiveSummary:
-        'Mobius succumbed to a combination of unexpected tax shocks—principally the re-imposition of 16% VAT and excise levies on local assembly parts under successive Finance Acts—combined with long inventory lead times and price point escalation that positioned their spartan utility vehicle dangerously close to reconditioned Japanese imports with luxury features.',
-      forensicAnalysis:
-        'Founded by British entrepreneur Joel Jackson, Mobius raised over $56M (KES 7.2B) across its lifespan. The initial proposition (Mobius II) targeted a sub-$10,000 price point for rural transport. However, component sourcing across China and Europe faced persistent logistics headwinds. When the Finance Act 2020 and subsequent amendments removed crucial tax waivers on completely knocked down (CKD) kits, the retail price of Mobius 3 swelled to KES 3.9M, evaporating its core value proposition. On August 5, 2024, shareholders voted to liquidate under Section 393 of the Insolvency Act, appointing KVSK Kalsi as liquidator.',
-      hindrancesAndObstacles: [
-        'Unpredictable fiscal regime on local automotive value addition (inconsistent CKD vs CBU incentives)',
-        'Lack of an indigenous automotive supply chain ecosystem forcing heavy reliance on foreign component imports',
-        'Consumer preference for used Japanese imports offering air conditioning and automatic transmissions at comparable price points',
-        'Working capital exhaustion during prolonged design iteration cycles',
-      ],
-      revitalizationFeasibility: 'MEDIUM',
-      revitalizationNarrative:
-        'The physical tooling, intellectual property, and Mombasa Road assembly line hold tangible value for commercial EV conversion or fleet contract manufacturing if acquired by a regional consortium with patient sovereign industrial financing.',
-      citations: [
-        {
-          id: 'cit-mob-01',
-          title: 'Notice of Creditors Meeting for Voluntary Liquidation of Mobius Motors',
-          publisher: 'Kenya Gazette Vol. CXXVI No. 104',
-          publicationDate: '2024-08-09',
-          url: 'https://kenyalaw.org/kenya_gazette/gazette/volume/MzYwNg--/Vol.CXXVI-No.104/',
-          tier: 'GAZETTE_OFFICIAL',
-          referenceNumber: 'Gazette Notice No. 10184',
-          keyExcerpt:
-            'Notice is hereby given that a meeting of creditors of Mobius Motors Kenya Limited will be held under Section 393 of the Insolvency Act 2015 to consider voluntary winding up.',
-        },
-        {
-          id: 'cit-mob-02',
-          title: 'Mobius Motors to wind up operations in Kenya after 13 years',
-          publisher: 'Business Daily Africa',
-          publicationDate: '2024-08-06',
-          url: 'https://www.businessdailyafrica.com/bd/corporate/companies/mobius-motors-to-wind-up-operations-in-kenya-4715560',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt:
-            'The shareholders of Mobius Motors Kenya Ltd resolved to place the company under voluntary liquidation citing cash flow distress and adverse regulatory headwinds.',
-        },
-      ],
-    },
-    timeline: [
-      {
-        id: 'tm-mob-01',
-        assetId: 'ast-mobius-motors',
-        date: '2011-04-15',
-        title: 'Incorporation & Prototype Development',
-        summary: 'Joel Jackson incorporates Mobius Motors in Kilifi/Nairobi to engineer a no-frills off-road vehicle for rural logistics.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-mob-tm-1',
-          title: 'Mobius Motors Corporate History & Initial Filing',
-          publisher: 'Registrar of Companies Kenya',
-          publicationDate: '2011-04-15',
-          url: 'https://brs.go.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Registration of Mobius Motors Kenya Limited under the Companies Act Cap 486.',
-        },
-      },
-      {
-        id: 'tm-mob-02',
-        assetId: 'ast-mobius-motors',
-        date: '2018-03-20',
-        title: '$5M Series A Funding & US DFC Facility',
-        summary: 'Secured international venture equity and debt to establish a dedicated assembly line at Sameer Business Park.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-mob-tm-2',
-          title: 'DFC Investment Approval for Mobius Motors Assembly',
-          publisher: 'U.S. International Development Finance Corporation',
-          publicationDate: '2018-03-20',
-          url: 'https://www.dfc.gov/our-impact/project-database',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Direct loan investment to support the commercial production of utilitarian vehicles tailored to African transport infrastructure.',
-        },
-      },
-      {
-        id: 'tm-mob-03',
-        assetId: 'ast-mobius-motors',
-        date: '2020-07-01',
-        title: 'Tax Exemption Rollbacks & COVID Squeeze',
-        summary: 'Finance Act 2020 introduces revisions to excise duty on locally assembled motor vehicles, tightening unit margins.',
-        impact: 'WARNING',
-        citation: {
-          id: 'cit-mob-tm-3',
-          title: 'Finance Act 2020 Review of Excise Duty Act',
-          publisher: 'Kenya Law Reports (eKLR)',
-          publicationDate: '2020-07-01',
-          url: 'https://kenyalaw.org',
-          tier: 'COURT_RULING',
-          keyExcerpt: 'Amendments touching on First Schedule to the Excise Duty Act, 2015 regarding motor vehicle assemblies.',
-        },
-      },
-      {
-        id: 'tm-mob-04',
-        assetId: 'ast-mobius-motors',
-        date: '2024-08-05',
-        title: 'Shareholder Resolution for Voluntary Liquidation',
-        summary: 'Shareholders vote to place Mobius into liquidation following an inability to service operational debts and tax penalties.',
-        impact: 'CRITICAL_FAILURE',
-        citation: {
-          id: 'cit-mob-tm-4',
-          title: 'Mobius Liquidation Resolution Notice',
-          publisher: 'Business Daily',
-          publicationDate: '2024-08-06',
-          url: 'https://www.businessdailyafrica.com',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt: 'Shareholders resolve to liquidate under Insolvency Act 2015 due to cash flow distress.',
-        },
-      },
-    ],
-    valuationHistory: [
-      {
-        date: '2014-06-01',
-        valueKES: 500000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Initial seed capital and development asset valuation',
-      },
-      {
-        date: '2018-04-01',
-        valueKES: 3500000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Series A post-money valuation round',
-      },
-      {
-        date: '2024-08-01',
-        valueKES: 1100000000,
-        metricType: 'OUTSTANDING_DEBT',
-        citationTitle: 'Total creditor claims tabulated at liquidation meeting',
-      },
-    ],
-    primaryCitations: [
-      {
-        id: 'cit-mob-pc-1',
-        title: 'Kenya Gazette Notice No. 10184 - Insolvency Act 2015',
-        publisher: 'Government Printer, Nairobi',
-        publicationDate: '2024-08-09',
-        url: 'https://kenyalaw.org/kenya_gazette',
-        tier: 'GAZETTE_OFFICIAL',
-        keyExcerpt: 'Appointment of KVSK Kalsi as Liquidator of Mobius Motors Kenya Limited.',
-      },
-    ],
-    createdAt: '2026-10-11T00:00:00Z',
-    updatedAt: '2026-10-11T00:00:00Z',
-  },
-
+// Additional strategic historic anchors: Mumias, Nakumatt, Imperial Bank, ARM Cement, Pan Paper
+const HISTORIC_CORE_ASSETS: Asset[] = [
   {
     id: 'ast-mumias-sugar',
     slug: 'mumias-sugar',
@@ -185,33 +18,28 @@ export const INITIAL_ASSETS: Asset[] = [
     county: 'Kakamega',
     headquarters: 'Mumias Complex, Kakamega County',
     establishedYear: 1971,
-    currentValuationKES: 15000000000, // Assets including nucleus estate land and factory
-    peakValuationKES: 45000000000,    // Peak NSE market cap + infrastructure
-    debtExposureKES: 29000000000,     // Total debt burden across KCB, Stanbic, Ecobank, cane farmers
+    currentValuationKES: 15000000000,
+    peakValuationKES: 45000000000,
+    debtExposureKES: 29000000000,
     summary:
       'Formerly Kenya’s undisputed sugar titan producing over 250,000 metric tonnes annually (over 60% of domestic market supply) and operating a 38MW electricity co-generation plant. Placed under receivership by KCB Group in September 2019 following catastrophic mismanagement, state bailout looting, cane poaching by predatory private millers, and crippling farmer arrears.',
     autopsy: {
       id: 'aut-mumias-01',
       assetId: 'ast-mumias-sugar',
       primaryCause: 'GOVERNANCE_FRAUD',
-      contributingFactors: [
-        'POLITICAL_INTERFERENCE',
-        'SUPPLY_CHAIN_COLLAPSE',
-        'DEBT_OVERLEVERAGE',
-        'TECHNOLOGY_OBSOLESCENCE',
-      ],
+      contributingFactors: ['POLITICAL_INTERFERENCE', 'SUPPLY_CHAIN_COLLAPSE', 'DEBT_OVERLEVERAGE', 'TECHNOLOGY_OBSOLESCENCE'],
       peakValuationKES: 45000000000,
       debtAtCollapseKES: 29000000000,
-      jobsImpacted: 18000, // Direct workers + outgrower farming households
+      jobsImpacted: 18000,
       executiveSummary:
         'Mumias was decimated by widespread boardroom plunder, artificial sugar import syndicates that flooded the domestic market with cheap duty-free sugar, and chronic failure to pay over 50,000 cane farmers who subsequently uprooted cane or sold to unlicensed competitor weighbridges.',
       forensicAnalysis:
-        'Between 2014 and 2018, the Government of Kenya injected over KES 3.1 Billion in taxpayer bailouts to rescue the miller. Forensic audits by KPMG revealed that funds were diverted to settle fictitious supplier invoices and parallel import contracts. The nucleus estate (over 4,000 hectares) fell dormant. In September 2019, secured debenture holder KCB Group appointed PVR Rao as receiver-manager. Subsequent attempts to lease the factory sparked endless legal warfare between Sarrai Group, West Kenya Sugar, and Dubai-based conglomerate Devki Group.',
+        'Between 2014 and 2018, the Government of Kenya injected over KES 3.1 Billion in taxpayer bailouts to rescue the miller. Forensic audits by KPMG revealed that funds were diverted to settle fictitious supplier invoices and parallel import contracts. The nucleus estate (over 4,000 hectares) fell dormant. In September 2019, secured debenture holder KCB Group appointed PVR Rao as receiver-manager. Subsequent attempts to lease the factory sparked endless legal warfare between Sarrai Group, West Kenya Sugar, and Devki Group.',
       hindrancesAndObstacles: [
         'Over KES 12 Billion owed directly to outgrower farmers, destroying agricultural supplier trust',
         'Fierce cane poaching by neighboring private sugar mills lacking their own nucleus estates',
         'Incessant litigation (over 25 separate High Court and Court of Appeal suits) preventing clean leasehold or recapitalization',
-        'Dilapidated, unserviced 1970s diffuser machinery requiring an estimated KES 6B in complete overhaul capital',
+        'Dilapidated 1970s diffuser machinery requiring an estimated KES 6B in complete overhaul capital',
       ],
       revitalizationFeasibility: 'HIGH',
       revitalizationNarrative:
@@ -225,8 +53,7 @@ export const INITIAL_ASSETS: Asset[] = [
           url: 'https://kenyalaw.org/kenya_gazette',
           tier: 'GAZETTE_OFFICIAL',
           referenceNumber: 'Gazette Notice No. 9130',
-          keyExcerpt:
-            'Notice is hereby given that KCB Bank Kenya Limited has appointed Ponangipalli Venkata Ramana Rao as Receiver and Manager of Mumias Sugar Company Limited under powers contained in debentures.',
+          keyExcerpt: 'Notice is hereby given that KCB Bank Kenya Limited has appointed Ponangipalli Venkata Ramana Rao as Receiver and Manager of Mumias Sugar Company Limited under powers contained in debentures.',
         },
         {
           id: 'cit-mum-02',
@@ -236,8 +63,7 @@ export const INITIAL_ASSETS: Asset[] = [
           url: 'https://kenyalaw.org/caselaw/cases/view/230154/',
           tier: 'COURT_RULING',
           referenceNumber: '[2022] eKLR',
-          keyExcerpt:
-            'Ruling setting aside the 20-year lease awarded to Sarrai Group on grounds of lack of public procurement transparency and creditor exclusion.',
+          keyExcerpt: 'Ruling setting aside the 20-year lease awarded to Sarrai Group on grounds of lack of public procurement transparency and creditor exclusion.',
         },
       ],
     },
@@ -262,29 +88,12 @@ export const INITIAL_ASSETS: Asset[] = [
       {
         id: 'tm-mum-02',
         assetId: 'ast-mumias-sugar',
-        date: '2015-06-25',
-        title: 'First Government Bailout (KES 1B Tranche)',
-        summary: 'President Uhuru Kenyatta issues direct treasury bailout to clear farmer debt, but funds evaporate into legacy creditor claims.',
-        impact: 'WARNING',
-        citation: {
-          id: 'cit-mum-tm-2',
-          title: 'Parliamentary Committee on Agriculture Report on Sugar Sector',
-          publisher: 'Parliament of Kenya',
-          publicationDate: '2015-09-10',
-          url: 'http://www.parliament.go.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Inquiry into utilization of KES 1 Billion bailout funds released to Mumias Sugar Company.',
-        },
-      },
-      {
-        id: 'tm-mum-03',
-        assetId: 'ast-mumias-sugar',
         date: '2019-09-24',
         title: 'KCB Appoints Receiver-Manager (Trading Suspended)',
         summary: 'KCB Bank Kenya enters factory gates, places company under administration, and NSE suspends Mumias shares.',
         impact: 'CRITICAL_FAILURE',
         citation: {
-          id: 'cit-mum-tm-3',
+          id: 'cit-mum-tm-2',
           title: 'NSE Suspension of Mumias Sugar Shares',
           publisher: 'Nairobi Securities Exchange',
           publicationDate: '2019-09-24',
@@ -295,24 +104,9 @@ export const INITIAL_ASSETS: Asset[] = [
       },
     ],
     valuationHistory: [
-      {
-        date: '2006-12-01',
-        valueKES: 45000000000,
-        metricType: 'MARKET_CAP',
-        citationTitle: 'Peak valuation when share price traded above KES 60 per share',
-      },
-      {
-        date: '2019-09-01',
-        valueKES: 29000000000,
-        metricType: 'OUTSTANDING_DEBT',
-        citationTitle: 'Audited creditor claims submitted to Receiver Manager PVR Rao',
-      },
-      {
-        date: '2023-01-01',
-        valueKES: 15000000000,
-        metricType: 'BOOK_VALUE',
-        citationTitle: 'Fixed physical assets including 4,000ha land and power co-generation equipment',
-      },
+      { date: '2006-12-01', valueKES: 45000000000, metricType: 'MARKET_CAP', citationTitle: 'Peak valuation when share price traded above KES 60 per share' },
+      { date: '2019-09-01', valueKES: 29000000000, metricType: 'OUTSTANDING_DEBT', citationTitle: 'Audited creditor claims submitted to Receiver Manager PVR Rao' },
+      { date: '2023-01-01', valueKES: 15000000000, metricType: 'BOOK_VALUE', citationTitle: 'Fixed physical assets including 4,000ha land and power co-generation equipment' },
     ],
     primaryCitations: [
       {
@@ -343,31 +137,27 @@ export const INITIAL_ASSETS: Asset[] = [
     establishedYear: 1987,
     defunctYear: 2020,
     currentValuationKES: 0,
-    peakValuationKES: 40000000000, // Peak retail empire value
-    debtExposureKES: 38000000000, // Audited debt at collapse
+    peakValuationKES: 40000000000,
+    debtExposureKES: 38000000000,
     summary:
       'The undisputed king of East African retail with its iconic slogan "You Need It, We’ve Got It". At its zenith, Nakumatt operated 65 hypermarkets across Kenya, Uganda, Tanzania, and Rwanda, generating over KES 52 Billion in annual revenue. In January 2020, creditors voted to dissolve the chain after an unprecedented debt spiral left KES 38 Billion in unpaid bank loans, commercial paper, and supplier invoices.',
     autopsy: {
       id: 'aut-naku-01',
       assetId: 'ast-nakumatt-holdings',
       primaryCause: 'DEBT_OVERLEVERAGE',
-      contributingFactors: [
-        'GOVERNANCE_FRAUD',
-        'MARKET_DEMAND_SHIFT',
-        'POLITICAL_INTERFERENCE',
-      ],
+      contributingFactors: ['GOVERNANCE_FRAUD', 'MARKET_DEMAND_SHIFT', 'POLITICAL_INTERFERENCE'],
       peakValuationKES: 40000000000,
       debtAtCollapseKES: 38000000000,
       jobsImpacted: 7000,
       executiveSummary:
-        'Nakumatt collapsed under an unsustainable mountain of short-term debt utilized to fund long-term branch expansion across 4 countries. Behind a glossy facade of full shelves, the business operated as an informal credit pyramid, deferring supplier payments for 180 to 360 days while family owners diverted working capital into speculative property holdings and unrelated ventures.',
+        'Nakumatt collapsed under an unsustainable mountain of short-term debt utilized to fund long-term branch expansion across 4 countries. Behind a glossy facade of full shelves, the business operated as an informal credit pyramid, deferring supplier payments for 180 to 360 days while family owners diverted working capital into speculative property holdings.',
       forensicAnalysis:
-        'The Atul Shah family maintained tight, opaque governance without independent board oversight. When local suppliers refused further deliveries in 2017 without cash on delivery, shelves across anchor mall locations (Junction, Mega, Prestige, Westgate) emptied simultaneously. The High Court approved administration in 2018 appointing Peter Kahi (PKF). However, asset liquidation only realized KES 422 Million against KES 38 Billion in claims (a recovery rate of barely 1.1 cents on the dollar for unsecured suppliers and commercial paper holders).',
+        'The Atul Shah family maintained tight, opaque governance without independent board oversight. When local suppliers refused further deliveries in 2017 without cash on delivery, shelves across anchor mall locations emptied simultaneously. The High Court approved administration in 2018 appointing Peter Kahi (PKF). However, asset liquidation only realized KES 422 Million against KES 38 Billion in claims (a recovery rate of barely 1.1 cents on the dollar for unsecured suppliers).',
       hindrancesAndObstacles: [
         'Unsecured supplier debt exceeding KES 18 Billion causing systemic shockwaves across Kenyan manufacturing',
         'Commercial banks holding competing debentures over fixed and floating assets',
-        'Leasehold litigation and aggressive landlord evictions (e.g. Knight Frank, NSSF) that prevented orderly branch turnaround',
-        'Rapid market capture by international hypermarket entrants (Carrefour) and local agile discounters (Quickmart, Naivas)',
+        'Leasehold litigation and aggressive landlord evictions (Knight Frank, NSSF) preventing orderly branch turnaround',
+        'Rapid market capture by international hypermarket entrants (Carrefour) and local discounters (Quickmart, Naivas)',
       ],
       revitalizationFeasibility: 'IMPOSSIBLE',
       revitalizationNarrative:
@@ -381,58 +171,13 @@ export const INITIAL_ASSETS: Asset[] = [
           url: 'https://kenyalaw.org/caselaw/cases/view/147610/',
           tier: 'COURT_RULING',
           referenceNumber: '[2018] eKLR',
-          keyExcerpt:
-            'Order placing Nakumatt Holdings Limited under administration pursuant to Section 563 of the Insolvency Act 2015 and appointing Peter Obondo Kahi as Administrator.',
-        },
-        {
-          id: 'cit-nak-02',
-          title: 'Creditors Vote to Liquidate Nakumatt Holdings',
-          publisher: 'Business Daily Africa',
-          publicationDate: '2020-01-08',
-          url: 'https://www.businessdailyafrica.com/bd/corporate/companies/nakumatt-creditors-vote-to-wind-up-retailer-2273648',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt:
-            'Creditors of Nakumatt Holdings on Tuesday voted to wind up the supermarket chain, writing off KES 38 billion in outstanding debt after an administration process failed to find a strategic investor.',
+          keyExcerpt: 'Order placing Nakumatt Holdings Limited under administration pursuant to Section 563 of the Insolvency Act 2015 and appointing Peter Obondo Kahi as Administrator.',
         },
       ],
     },
     timeline: [
       {
         id: 'tm-nak-01',
-        assetId: 'ast-nakumatt-holdings',
-        date: '2013-05-10',
-        title: 'Opening of 40th Branch & Pan-African Expansion',
-        summary: 'Nakumatt accelerates regional footprint into Uganda, Rwanda, and Tanzania backed by KES 4B in short-term commercial paper.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-nak-tm-1',
-          title: 'Nakumatt Regional Expansion Disclosure',
-          publisher: 'Daily Nation',
-          publicationDate: '2013-05-10',
-          url: 'https://nation.africa',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt: 'Retailer opens 40th branch in Arusha, plans 50 branches by 2015.',
-        },
-      },
-      {
-        id: 'tm-nak-02',
-        assetId: 'ast-nakumatt-holdings',
-        date: '2017-06-15',
-        title: 'Supplier Boycott & Stockouts',
-        summary: 'Major manufacturers (Brookside, Unilever, Bidco) halt deliveries over unpaid invoices dating back 9 months.',
-        impact: 'WARNING',
-        citation: {
-          id: 'cit-nak-tm-2',
-          title: 'Manufacturers Association (KAM) Statement on Retail Arrears',
-          publisher: 'Kenya Association of Manufacturers',
-          publicationDate: '2017-06-15',
-          url: 'https://kam.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Over KES 10 Billion owed to domestic food and FMCG manufacturers by retail chains.',
-        },
-      },
-      {
-        id: 'tm-nak-03',
         assetId: 'ast-nakumatt-holdings',
         date: '2020-01-07',
         title: 'Formal Liquidation & Dissolution Order',
@@ -450,24 +195,9 @@ export const INITIAL_ASSETS: Asset[] = [
       },
     ],
     valuationHistory: [
-      {
-        date: '2014-01-01',
-        valueKES: 40000000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Valuation during talks with South Africa’s Massmart',
-      },
-      {
-        date: '2018-01-01',
-        valueKES: 38000000000,
-        metricType: 'OUTSTANDING_DEBT',
-        citationTitle: 'Audited claims verified by PKF Administration',
-      },
-      {
-        date: '2020-01-01',
-        valueKES: 422000000,
-        metricType: 'AUCTION_RESERVE',
-        citationTitle: 'Total proceeds realized from auction of residual store fixtures',
-      },
+      { date: '2014-01-01', valueKES: 40000000000, metricType: 'PEAK_VALUATION', citationTitle: 'Valuation during talks with South Africa’s Massmart' },
+      { date: '2018-01-01', valueKES: 38000000000, metricType: 'OUTSTANDING_DEBT', citationTitle: 'Audited claims verified by PKF Administration' },
+      { date: '2020-01-01', valueKES: 422000000, metricType: 'AUCTION_RESERVE', citationTitle: 'Total proceeds realized from auction of residual store fixtures' },
     ],
     primaryCitations: [
       {
@@ -506,18 +236,14 @@ export const INITIAL_ASSETS: Asset[] = [
       id: 'aut-imp-01',
       assetId: 'ast-imperial-bank',
       primaryCause: 'GOVERNANCE_FRAUD',
-      contributingFactors: [
-        'REGULATORY_TAX_POLICY',
-        'POLITICAL_INTERFERENCE',
-        'TECHNOLOGY_OBSOLESCENCE',
-      ],
+      contributingFactors: ['REGULATORY_TAX_POLICY', 'POLITICAL_INTERFERENCE', 'TECHNOLOGY_OBSOLESCENCE'],
       peakValuationKES: 25000000000,
       debtAtCollapseKES: 38000000000,
       jobsImpacted: 850,
       executiveSummary:
         'A textbook corporate governance catastrophe in Kenyan banking history. The managing director operated a clandestine second core-banking ledger (using modified software routines) that disbursed depositors’ money to 8 shell companies for over a decade with the complicity of senior auditors and Central Bank inspection officers.',
       forensicAnalysis:
-        'Following the sudden death of founding Managing Director Abdulmalek Janmohamed in September 2015, whistleblowing executives discovered that Janmohamed had maintained shadow loans amounting to over KES 38 Billion (representing roughly 40% of the entire bank’s balance sheet). Central Bank Governor Patrick Njoroge placed the lender under KDIC receivership on October 13, 2015. Over KES 2 Billion in bond proceeds raised from retail investors had been banked days before closure. In 2020, KCB Group completed the carve-out acquisition of selected assets and verified deposit liabilities, leaving the residual shell in liquidation.',
+        'Following the sudden death of founding Managing Director Abdulmalek Janmohamed in September 2015, whistleblowing executives discovered that Janmohamed had maintained shadow loans amounting to over KES 38 Billion. Central Bank Governor Patrick Njoroge placed the lender under KDIC receivership on October 13, 2015. In 2020, KCB Group completed the carve-out acquisition of selected assets and verified deposit liabilities, leaving the residual shell in liquidation.',
       hindrancesAndObstacles: [
         'Prolonged legal obstruction by shareholder families resisting asset tracing and forensic clawbacks',
         'Compromised external audits: PKF Kenya was investigated for failing to identify shadow ledger transactions for 13 consecutive audits',
@@ -532,42 +258,13 @@ export const INITIAL_ASSETS: Asset[] = [
           title: 'CBK Press Release: Appointment of KDIC as Receiver of Imperial Bank Limited',
           publisher: 'Central Bank of Kenya',
           publicationDate: '2015-10-13',
-          url: 'https://www.centralbank.go.ke/wp-content/uploads/2016/08/press_release_13_oct_2015.pdf',
+          url: 'https://www.centralbank.go.ke',
           tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt:
-            'The Central Bank of Kenya has today appointed the Kenya Deposit Insurance Corporation (KDIC) as receiver for Imperial Bank Limited under Section 43(1) of the Kenya Deposit Insurance Act, 2012 in the interest of depositors and creditors.',
-        },
-        {
-          id: 'cit-imp-02',
-          title: 'High Court Commercial Suit No. 439 of 2015 (Imperial Bank Ltd v WE Tilley Ltd & Others)',
-          publisher: 'Kenya Law Reports (eKLR)',
-          publicationDate: '2016-03-04',
-          url: 'https://kenyalaw.org/caselaw/cases/view/119941/',
-          tier: 'COURT_RULING',
-          referenceNumber: '[2016] eKLR',
-          keyExcerpt:
-            'Suit detailing the siphon of KES 34 Billion through fish processing company W.E. Tilley (Muthaiga) Limited and allied proxy entities.',
+          keyExcerpt: 'The Central Bank of Kenya has appointed the Kenya Deposit Insurance Corporation (KDIC) as receiver for Imperial Bank Limited under Section 43(1) of the Kenya Deposit Insurance Act, 2012.',
         },
       ],
     },
     timeline: [
-      {
-        id: 'tm-imp-01',
-        assetId: 'ast-imperial-bank',
-        date: '2015-08-10',
-        title: 'KES 2 Billion Corporate Bond Approved & Floated',
-        summary: 'CMA approves corporate bond; public invests KES 2.05B based on falsified audited financial statements.',
-        impact: 'NEUTRAL',
-        citation: {
-          id: 'cit-imp-tm-1',
-          title: 'CMA Information Memorandum: Imperial Bank Medium Term Note',
-          publisher: 'Capital Markets Authority',
-          publicationDate: '2015-08-10',
-          url: 'https://cma.or.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Issuance of KES 2,000,000,000 5-year fixed rate subordinated unsecured notes.',
-        },
-      },
       {
         id: 'tm-imp-02',
         assetId: 'ast-imperial-bank',
@@ -585,37 +282,10 @@ export const INITIAL_ASSETS: Asset[] = [
           keyExcerpt: 'Appointment of KDIC as receiver pursuant to Section 43(1) of the Kenya Deposit Insurance Act.',
         },
       },
-      {
-        id: 'tm-imp-03',
-        assetId: 'ast-imperial-bank',
-        date: '2020-06-30',
-        title: 'KCB Completes Asset Transfer & Residual Liquidation',
-        summary: 'KCB absorbs verified performing loan books and branches; KDIC orders final liquidation of remainder.',
-        impact: 'NEUTRAL',
-        citation: {
-          id: 'cit-imp-tm-3',
-          title: 'KCB Group Transfer of Business Announcement',
-          publisher: 'Nairobi Securities Exchange',
-          publicationDate: '2020-06-30',
-          url: 'https://www.nse.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Transfer of selected assets and deposit liabilities of Imperial Bank to KCB Bank Kenya PLC.',
-        },
-      },
     ],
     valuationHistory: [
-      {
-        date: '2015-06-01',
-        valueKES: 25000000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Reported book equity before discovery of fraud',
-      },
-      {
-        date: '2015-10-01',
-        valueKES: 38000000000,
-        metricType: 'OUTSTANDING_DEBT',
-        citationTitle: 'CBK forensic audit total unbacked off-balance-sheet exposure',
-      },
+      { date: '2015-06-01', valueKES: 25000000000, metricType: 'PEAK_VALUATION', citationTitle: 'Reported book equity before discovery of fraud' },
+      { date: '2015-10-01', valueKES: 38000000000, metricType: 'OUTSTANDING_DEBT', citationTitle: 'CBK forensic audit total unbacked off-balance-sheet exposure' },
     ],
     primaryCitations: [
       {
@@ -654,85 +324,36 @@ export const INITIAL_ASSETS: Asset[] = [
       id: 'aut-arm-01',
       assetId: 'ast-arm-cement',
       primaryCause: 'DEBT_OVERLEVERAGE',
-      contributingFactors: [
-        'MARKET_DEMAND_SHIFT',
-        'POLITICAL_INTERFERENCE',
-        'SUPPLY_CHAIN_COLLAPSE',
-      ],
+      contributingFactors: ['MARKET_DEMAND_SHIFT', 'POLITICAL_INTERFERENCE', 'SUPPLY_CHAIN_COLLAPSE'],
       peakValuationKES: 32000000000,
       debtAtCollapseKES: 14000000000,
       jobsImpacted: 3000,
       executiveSummary:
-        'ARM gambled on massive dollar-denominated commercial debt to construct a mega clinker plant in Tanga, Tanzania. When Tanzania banned Kenyan coal and raw gypsum imports while Aliko Dangote opened a 3-million-tonne plant slashing cement prices by 40%, ARM’s Tanzanian subsidiary began hemorrhaging cash, triggering cross-default clauses that dragged the solvent Kenyan parent company into liquidation.',
+        'ARM gambled on massive dollar-denominated commercial debt to construct a mega clinker plant in Tanga, Tanzania. When Tanzania banned Kenyan coal and raw gypsum imports while Aliko Dangote opened a 3-million-tonne plant slashing cement prices by 40%, ARM’s Tanzanian subsidiary began hemorrhaging cash, dragging the solvent Kenyan parent company into liquidation.',
       forensicAnalysis:
-        'PwC administrators Muniu Thoithi and George Weru took control in August 2018. Despite CDC Group (now BII) injecting $140M in equity in 2016, ARM’s earnings before interest, tax, depreciation, and amortization (EBITDA) were insufficient to service interest payments to a banking consortium led by Stanbic, AFC, and Standard Chartered. In October 2019, the administrators sold ARM’s Kenyan manufacturing plants to billionaire Narendra Raval’s National Cement (Devki Group) for $50 Million (KES 5 Billion), a steep discount against historical replacement cost.',
+        'PwC administrators took control in August 2018. In October 2019, the administrators sold ARM’s Kenyan manufacturing plants to billionaire Narendra Raval’s National Cement (Devki Group) for $50 Million (KES 5 Billion), a steep discount against historical replacement cost.',
       hindrancesAndObstacles: [
-        'Aggressive pricing pressure from Dangote Cement across East Africa slashing regional gross margins from $35/ton to under $18/ton',
-        'Currency mismatch: Borrowing heavily in US Dollars while revenues were collected in depreciating Kenya and Tanzania Shillings',
-        'Trade protectionism and sudden non-tariff barriers erected by Tanzanian authorities on coal and raw materials',
+        'Aggressive pricing pressure from Dangote Cement across East Africa slashing margins',
+        'Currency mismatch: Borrowing heavily in US Dollars while revenues were collected in depreciating local currency',
+        'Trade protectionism on raw coal and clinker imports in Tanzania',
       ],
       revitalizationFeasibility: 'HIGH',
       revitalizationNarrative:
-        'Physical assets successfully absorbed and upgraded by National Cement (Devki Group), restoring Athi River clinker operations under low-cost local management.',
+        'Physical assets successfully absorbed and upgraded by National Cement (Devki Group), restoring Athi River clinker operations.',
       citations: [
         {
           id: 'cit-arm-01',
           title: 'High Court Insolvency Petition No. 12 of 2018 (In re ARM Cement PLC)',
           publisher: 'Kenya Law Reports (eKLR)',
           publicationDate: '2018-08-17',
-          url: 'https://kenyalaw.org/caselaw/cases/view/158912/',
+          url: 'https://kenyalaw.org',
           tier: 'COURT_RULING',
           referenceNumber: '[2018] eKLR',
-          keyExcerpt:
-            'Order placing ARM Cement PLC under administration and appointing Muniu Thoithi and George Weru of PricewaterhouseCoopers as joint administrators.',
-        },
-        {
-          id: 'cit-arm-02',
-          title: 'National Cement completes acquisition of ARM Cement Kenya assets for KES 5 Billion',
-          publisher: 'Business Daily',
-          publicationDate: '2019-10-23',
-          url: 'https://www.businessdailyafrica.com/bd/corporate/companies/devki-completes-arm-assets-purchase-2268710',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt:
-            'National Cement Company has finalized the purchase of the Kenyan assets of collapsed cement maker ARM Cement for Sh5 billion, bringing an end to the 14-month administration process.',
+          keyExcerpt: 'Order placing ARM Cement PLC under administration.',
         },
       ],
     },
     timeline: [
-      {
-        id: 'tm-arm-01',
-        assetId: 'ast-arm-cement',
-        date: '2014-03-12',
-        title: 'Peak Market Capitalization on NSE',
-        summary: 'ARM shares hit KES 98 per share on Nairobi Securities Exchange, valuing the group above KES 32 Billion.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-arm-tm-1',
-          title: 'NSE Annual Trading Summary 2014',
-          publisher: 'Nairobi Securities Exchange',
-          publicationDate: '2014-12-31',
-          url: 'https://www.nse.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'ARM Cement emerges as top performing industrial counter on the NSE.',
-        },
-      },
-      {
-        id: 'tm-arm-02',
-        assetId: 'ast-arm-cement',
-        date: '2016-04-28',
-        title: 'CDC Group $140M Equity Injection',
-        summary: 'British sovereign development financier CDC acquires 42% stake in bid to restructure crippling short-term bank debt.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-arm-tm-2',
-          title: 'CDC Investment Agreement Disclosure',
-          publisher: 'Capital Markets Authority',
-          publicationDate: '2016-04-28',
-          url: 'https://cma.or.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'CDC Group commits $140 Million equity investment to support balance sheet restructuring of ARM Cement.',
-        },
-      },
       {
         id: 'tm-arm-03',
         assetId: 'ast-arm-cement',
@@ -752,24 +373,9 @@ export const INITIAL_ASSETS: Asset[] = [
       },
     ],
     valuationHistory: [
-      {
-        date: '2014-03-01',
-        valueKES: 32000000000,
-        metricType: 'MARKET_CAP',
-        citationTitle: 'Peak valuation on Nairobi Securities Exchange',
-      },
-      {
-        date: '2018-08-01',
-        valueKES: 14000000000,
-        metricType: 'OUTSTANDING_DEBT',
-        citationTitle: 'Total creditor liabilities audited by PwC',
-      },
-      {
-        date: '2019-10-01',
-        valueKES: 5000000000,
-        metricType: 'AUCTION_RESERVE',
-        citationTitle: 'Asset sale price to Devki National Cement',
-      },
+      { date: '2014-03-01', valueKES: 32000000000, metricType: 'MARKET_CAP', citationTitle: 'Peak valuation on Nairobi Securities Exchange' },
+      { date: '2018-08-01', valueKES: 14000000000, metricType: 'OUTSTANDING_DEBT', citationTitle: 'Total creditor liabilities audited by PwC' },
+      { date: '2019-10-01', valueKES: 5000000000, metricType: 'AUCTION_RESERVE', citationTitle: 'Asset sale price to Devki National Cement' },
     ],
     primaryCitations: [
       {
@@ -802,126 +408,62 @@ export const INITIAL_ASSETS: Asset[] = [
     peakValuationKES: 18000000000,
     debtExposureKES: 8000000000,
     summary:
-      'Once the crown jewel of heavy industrial manufacturing in East Africa and the primary economic engine of Webuye town in western Kenya. Established in 1974 through a partnership between the Government of Kenya, the World Bank IFC, and Orient Paper of India. Collapsed in 2009 under KES 8 Billion debt to Kenya Power and commercial banks. Sold to Rai Group in 2016 for KES 900 Million, but operates today at barely 15% of historical design capacity.',
+      'Once the crown jewel of heavy industrial manufacturing in East Africa and the primary economic engine of Webuye town. Collapsed in 2009 under KES 8 Billion debt to Kenya Power and commercial banks. Sold to Rai Group in 2016 for KES 900 Million, but operates today at barely 15% of historical design capacity.',
     autopsy: {
       id: 'aut-pan-01',
       assetId: 'ast-pan-paper-mills',
       primaryCause: 'TECHNOLOGY_OBSOLESCENCE',
-      contributingFactors: [
-        'POLITICAL_INTERFERENCE',
-        'REGULATORY_TAX_POLICY',
-        'SUPPLY_CHAIN_COLLAPSE',
-      ],
+      contributingFactors: ['POLITICAL_INTERFERENCE', 'REGULATORY_TAX_POLICY', 'SUPPLY_CHAIN_COLLAPSE'],
       peakValuationKES: 18000000000,
       debtAtCollapseKES: 8000000000,
-      jobsImpacted: 6500, // 2,500 direct workers + 4,000 forestry and transport contractors
+      jobsImpacted: 6500,
       executiveSummary:
-        'Pan Paper collapsed due to catastrophic industrial power tariffs, a ban on state forest harvesting which choked its pulpwood supply, and obsolete chemical recovery boilers that rendered local paper twice as expensive to produce compared to cheap paper dumped from India, China, and Egypt.',
+        'Pan Paper collapsed due to catastrophic industrial power tariffs, a ban on state forest harvesting which choked its pulpwood supply, and obsolete chemical recovery boilers that rendered local paper twice as expensive as cheap imports from India, China, and Egypt.',
       forensicAnalysis:
-        'The factory’s power bill reached KES 100 Million per month in 2008 while Kenya Power disconnected supplies over KES 500M in unpaid arrears. At the same time, national logging bans in Kaptagat and Mount Elgon forests severed raw wood inputs. In 2016, joint receivers (PwC) sold the factory assets to Tarlochan Ltd (subsidiary of industrialist Jaswant Rai’s Rai Group) for KES 900M, sparking nationwide controversy regarding undervaluation. Despite official promises to re-employ thousands, the pulp plant remains permanently shut down; the site only recycles imported wastepaper into brown packaging carton.',
+        'The factory’s power bill reached KES 100 Million per month in 2008 while Kenya Power disconnected supplies over KES 500M in unpaid arrears. In 2016, joint receivers (PwC) sold the factory assets to Tarlochan Ltd (Rai Group) for KES 900M. Despite promises to re-employ thousands, the pulp plant remains permanently shut down; the site only recycles imported wastepaper into brown packaging carton.',
       hindrancesAndObstacles: [
-        'Total decommission of legacy chemical pulp production line due to strict modern environmental regulations and raw timber moratoriums',
-        'Heavy industrial electricity tariffs in Kenya making energy-intensive chemical pulping uncompetitive against global imports',
-        'Obsolete machinery from the 1970s and 1980s that would require an estimated KES 10B complete greenfield rebuild',
+        'Total decommission of legacy chemical pulp production line due to strict modern environmental regulations',
+        'Heavy industrial electricity tariffs in Kenya making energy-intensive pulping uncompetitive',
+        'Obsolete machinery from the 1970s requiring an estimated KES 10B greenfield rebuild',
       ],
       revitalizationFeasibility: 'LOW',
       revitalizationNarrative:
-        'Pulp manufacturing is unfeasible without sustainable commercial forestry concessions and subsidized baseload green geothermal power. However, secondary wastepaper packaging and corrugated box conversion remain economically viable.',
+        'Pulp manufacturing is unfeasible without sustainable commercial forestry concessions and subsidized green geothermal power. However, secondary wastepaper packaging remains viable.',
       citations: [
         {
           id: 'cit-pan-01',
-          title: 'Report of the National Assembly Departmental Committee on Finance and Trade on the Revival of Pan Paper Mills',
+          title: 'Report on the Revival of Pan Paper Mills',
           publisher: 'Parliament of Kenya Hansard',
           publicationDate: '2016-11-22',
-          url: 'http://www.parliament.go.ke/the-national-assembly/house-business/hansard',
+          url: 'http://www.parliament.go.ke',
           tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt:
-            'Inquiry into the valuation of Pan Paper Mills assets and the sale by short-term lenders to Tarlochan Limited for KES 900 Million.',
-        },
-        {
-          id: 'cit-pan-02',
-          title: 'Webuye town weeps as revived paper mill operates at a shadow of former glory',
-          publisher: 'Daily Nation',
-          publicationDate: '2021-08-15',
-          url: 'https://nation.africa/kenya/business/webuye-paper-mill-operates-at-shadow-of-former-glory-3511874',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt:
-            'Five years after Rai Group took over the factory under high-profile political fanfare, local leaders protest that pulp lines remain dormant.',
+          keyExcerpt: 'Inquiry into the valuation of Pan Paper Mills assets and the sale to Tarlochan Limited for KES 900 Million.',
         },
       ],
     },
     timeline: [
       {
-        id: 'tm-pan-01',
-        assetId: 'ast-pan-paper-mills',
-        date: '1974-11-27',
-        title: 'Commissioning by President Jomo Kenyatta',
-        summary: 'Inauguration of East Africa’s largest integrated pulp and paper manufacturing plant.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-pan-tm-1',
-          title: 'Historical Gazette Notice on Pan Paper Mills Incorporation',
-          publisher: 'Kenya Gazette',
-          publicationDate: '1974-12-01',
-          url: 'https://kenyalaw.org',
-          tier: 'GAZETTE_OFFICIAL',
-          keyExcerpt: 'Establishment of Pan African Paper Mills at Webuye.',
-        },
-      },
-      {
         id: 'tm-pan-02',
         assetId: 'ast-pan-paper-mills',
         date: '2009-02-18',
         title: 'Factory Gates Shut as Power is Cut',
-        summary: 'Kenya Power cuts supply over unpaid electricity debts; management declares redundancy for all 1,500 factory staff.',
+        summary: 'Kenya Power cuts supply over unpaid electricity debts; management declares redundancy for 1,500 staff.',
         impact: 'CRITICAL_FAILURE',
         citation: {
           id: 'cit-pan-tm-2',
-          title: 'Ministry of Industrialization Task Force Report on Webuye',
+          title: 'Ministry of Industrialization Task Force Report',
           publisher: 'Government of Kenya',
           publicationDate: '2009-03-01',
           url: 'https://industrialization.go.ke',
           tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Audit of KES 8 Billion liabilities owed to Kenya Power, Barclays Bank, and IFC.',
-        },
-      },
-      {
-        id: 'tm-pan-03',
-        assetId: 'ast-pan-paper-mills',
-        date: '2016-04-28',
-        title: 'Sale to Rai Group for KES 900 Million',
-        summary: 'Receiver managers finalize fire sale of assets to Rai Group affiliate Tarlochan Limited.',
-        impact: 'REVIVAL',
-        citation: {
-          id: 'cit-pan-tm-3',
-          title: 'Asset Transfer Agreement Pan Paper / Tarlochan',
-          publisher: 'Business Daily',
-          publicationDate: '2016-04-29',
-          url: 'https://www.businessdailyafrica.com',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt: 'Rai Group acquires assets of Webuye Pan Paper for KES 900M.',
+          keyExcerpt: 'Audit of KES 8 Billion liabilities owed to Kenya Power and lenders.',
         },
       },
     ],
     valuationHistory: [
-      {
-        date: '1995-01-01',
-        valueKES: 18000000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Replacement book value of machinery, turbines, and railway sidings',
-      },
-      {
-        date: '2009-02-01',
-        valueKES: 8000000000,
-        metricType: 'OUTSTANDING_DEBT',
-        citationTitle: 'Total verified institutional debt across lenders',
-      },
-      {
-        date: '2016-04-01',
-        valueKES: 900000000,
-        metricType: 'AUCTION_RESERVE',
-        citationTitle: 'Distressed purchase price paid by Rai Group affiliate',
-      },
+      { date: '1995-01-01', valueKES: 18000000000, metricType: 'PEAK_VALUATION', citationTitle: 'Replacement book value of machinery and turbines' },
+      { date: '2009-02-01', valueKES: 8000000000, metricType: 'OUTSTANDING_DEBT', citationTitle: 'Total verified institutional debt across lenders' },
+      { date: '2016-04-01', valueKES: 900000000, metricType: 'AUCTION_RESERVE', citationTitle: 'Distressed purchase price paid by Rai Group affiliate' },
     ],
     primaryCitations: [
       {
@@ -937,528 +479,33 @@ export const INITIAL_ASSETS: Asset[] = [
     createdAt: '2026-10-11T00:00:00Z',
     updatedAt: '2026-10-11T00:00:00Z',
   },
-
-  {
-    id: 'ast-upper-hill-land',
-    slug: 'upper-hill-land-benchmark',
-    name: 'Upper Hill Nairobi Land Benchmark',
-    legalName: 'Upper Hill Commercial Corridor Land Index',
-    assetClass: 'LAND_BENCHMARK',
-    sector: 'REAL_ESTATE_LAND',
-    subsector: 'Prime Commercial Real Estate Land',
-    status: 'ACTIVE',
-    county: 'Nairobi',
-    headquarters: 'Upper Hill District (Hospital Rd, Elgon Rd, Kilimanjaro Ave), Nairobi',
-    establishedYear: 2000,
-    currentValuationKES: 485000000, // Price per acre in 2024 (KES 485M)
-    peakValuationKES: 560000000,    // Peak price per acre reached in 2018 (KES 560M)
-    summary:
-      'The definitive benchmark of Kenya’s most expensive commercial real estate soil. Between 2004 and 2018, Upper Hill transformed from a sleepy low-density colonial residential suburb into the ultra-high-density financial capital of East Africa hosting the World Bank, Britam Tower, Equity Centre, and KCB Towers. After peaking at KES 560M per acre in 2018, land prices softened to ~KES 485M per acre due to severe infrastructure deficits (burst sewer lines, acute road traffic bottlenecks, and grade-A commercial office oversupply).',
-    timeline: [
-      {
-        id: 'tm-uh-01',
-        assetId: 'ast-upper-hill-land',
-        date: '2004-01-01',
-        title: 'Nairobi City Council Rezoning from Low to High Density',
-        summary: 'Commercial rezoning triggers mass institutional exodus from Nairobi CBD to Upper Hill.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-uh-tm-1',
-          title: 'Nairobi Metropolitan Spatial Plan & Rezoning Ordinances',
-          publisher: 'Nairobi City County',
-          publicationDate: '2004-01-01',
-          url: 'https://nairobi.go.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Rezoning of Upper Hill from Zone 4 to Commercial Node Zone 1.',
-        },
-      },
-      {
-        id: 'tm-uh-02',
-        assetId: 'ast-upper-hill-land',
-        date: '2018-09-30',
-        title: 'All-Time Peak Acre Price (KES 560M / Acre)',
-        summary: 'Speculative peak driven by pension funds and bank headquarters acquisitions before office glut sets in.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-uh-tm-2',
-          title: 'HassConsult Land Price Index Q3 2018',
-          publisher: 'HassConsult Real Estate',
-          publicationDate: '2018-10-15',
-          url: 'https://hassconsult.co.ke/real-estate/land-price-indices/',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt: 'Upper Hill records peak land valuation of KES 560 Million per acre.',
-        },
-      },
-      {
-        id: 'tm-uh-03',
-        assetId: 'ast-upper-hill-land',
-        date: '2024-06-30',
-        title: 'Correction and Stabilization at KES 485M / Acre',
-        summary: 'Post-pandemic hybrid work models and office vacancies lead developers to pause new speculative high-rises.',
-        impact: 'NEUTRAL',
-        citation: {
-          id: 'cit-uh-tm-3',
-          title: 'Knight Frank Kenya Real Estate Market Report 2024',
-          publisher: 'Knight Frank Research',
-          publicationDate: '2024-07-01',
-          url: 'https://www.knightfrank.co.ke/research',
-          tier: 'FINANCIAL_PRESS_PRIMARY',
-          keyExcerpt: 'Upper Hill commercial land trades at average KES 480M-490M per acre.',
-        },
-      },
-    ],
-    valuationHistory: [
-      {
-        date: '2004-01-01',
-        valueKES: 50000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'HassConsult Historical Baseline (KES 50M per acre)',
-      },
-      {
-        date: '2010-01-01',
-        valueKES: 175000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'Boom cycle driven by multinational institutional relocations',
-      },
-      {
-        date: '2018-09-01',
-        valueKES: 560000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'All-time historical high recorded by HassConsult Land Index',
-      },
-      {
-        date: '2024-06-01',
-        valueKES: 485000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'Current verified transaction benchmark range',
-      },
-    ],
-    primaryCitations: [
-      {
-        id: 'cit-uh-pc-1',
-        title: 'HassConsult Land Price Index 2004-2024 Decadal Review',
-        publisher: 'HassConsult',
-        publicationDate: '2024-07-01',
-        url: 'https://hassconsult.co.ke',
-        tier: 'FINANCIAL_PRESS_PRIMARY',
-        keyExcerpt: 'Longitudinal index tracking price per acre across 18 Nairobi suburbs.',
-      },
-    ],
-    createdAt: '2026-10-11T00:00:00Z',
-    updatedAt: '2026-10-11T00:00:00Z',
-  },
-
-  {
-    id: 'ast-athi-river-industrial-land',
-    slug: 'athi-river-industrial-land-benchmark',
-    name: 'Athi River Industrial & SEZ Land Benchmark',
-    legalName: 'Athi River - Lukenya - Mavoko Logistics Corridor Benchmark',
-    assetClass: 'LAND_BENCHMARK',
-    sector: 'REAL_ESTATE_LAND',
-    subsector: 'Industrial Logistics & Special Economic Zone Soil',
-    status: 'ACTIVE',
-    county: 'Machakos',
-    headquarters: 'Mavoko Municipality, Machakos County',
-    establishedYear: 2005,
-    currentValuationKES: 38000000, // KES 38M per acre in 2024
-    peakValuationKES: 38000000,
-    summary:
-      'Kenya’s premier industrial manufacturing and logistics corridor. Driven by the Standard Gauge Railway (SGR) Inland Container Depot in Syokimau, dual carriage highway expansion, and designation of Special Economic Zones (SEZs), land values appreciated over 600% from KES 6M per acre in 2010 to KES 38M per acre in 2024, attracting multinational logistics, steel rolling mills, and cement giants.',
-    timeline: [
-      {
-        id: 'tm-ar-01',
-        assetId: 'ast-athi-river-industrial-land',
-        date: '2010-01-01',
-        title: 'Baseline Industrial Allocation Era',
-        summary: 'Land trades between KES 5M and KES 7M per acre prior to major mega-infrastructure commitments.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-ar-tm-1',
-          title: 'Machakos County Valuation Roll 2010',
-          publisher: 'County Government of Machakos',
-          publicationDate: '2010-01-01',
-          url: 'https://machakosgovernment.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Industrial zone rating valuations across Mavoko Municipality.',
-        },
-      },
-      {
-        id: 'tm-ar-02',
-        assetId: 'ast-athi-river-industrial-land',
-        date: '2017-06-01',
-        title: 'SGR Freight Terminal & Inland Container Depot Commissioned',
-        summary: 'Cargo operations compel regional logistics and freight forwarding companies to purchase land along Mombasa Road.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-ar-tm-2',
-          title: 'Kenya Railways SGR Syokimau Terminal Operations',
-          publisher: 'Kenya Railways Corporation',
-          publicationDate: '2017-06-01',
-          url: 'https://krc.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Commencement of commercial cargo handling at Syokimau and Athi River sidings.',
-        },
-      },
-      {
-        id: 'tm-ar-03',
-        assetId: 'ast-athi-river-industrial-land',
-        date: '2024-03-15',
-        title: 'SEZ Fiscal Incentives Accelerate Greenfield Warehousing',
-        summary: 'Special Economic Zone status triggers greenfield pharmaceutical, food processing, and data center developments.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-ar-tm-3',
-          title: 'Special Economic Zones Authority (SEZA) Gazettement',
-          publisher: 'Kenya Gazette Vol. CXXVI No. 35',
-          publicationDate: '2024-03-15',
-          url: 'https://kenyalaw.org/kenya_gazette',
-          tier: 'GAZETTE_OFFICIAL',
-          keyExcerpt: 'Declaration of Special Economic Zone enterprises in Mavoko, Machakos County.',
-        },
-      },
-    ],
-    valuationHistory: [
-      {
-        date: '2010-01-01',
-        valueKES: 6000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'Historical market baseline before infrastructure wave',
-      },
-      {
-        date: '2016-01-01',
-        valueKES: 19000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'SGR construction phase speculative run-up',
-      },
-      {
-        date: '2024-01-01',
-        valueKES: 38000000,
-        metricType: 'LAND_PRICE_ACRE',
-        citationTitle: 'Current transacted logistics parcel rate per acre',
-      },
-    ],
-    primaryCitations: [
-      {
-        id: 'cit-ar-pc-1',
-        title: 'HassConsult Satellite Towns Land Price Index',
-        publisher: 'HassConsult',
-        publicationDate: '2024-07-01',
-        url: 'https://hassconsult.co.ke',
-        tier: 'FINANCIAL_PRESS_PRIMARY',
-        keyExcerpt: 'Athi River records steady industrial capital appreciation over 14 years.',
-      },
-    ],
-    createdAt: '2026-10-11T00:00:00Z',
-    updatedAt: '2026-10-11T00:00:00Z',
-  },
-
-  {
-    id: 'ast-safaricom-plc',
-    slug: 'safaricom-plc',
-    name: 'Safaricom PLC',
-    legalName: 'Safaricom Public Limited Company',
-    assetClass: 'ENTERPRISE_ACTIVE',
-    sector: 'TECHNOLOGY_FINTECH',
-    subsector: 'Telecommunications & Mobile Financial Infrastructure',
-    status: 'ACTIVE',
-    county: 'Nairobi',
-    headquarters: 'Safaricom House, Waiyaki Way, Nairobi',
-    establishedYear: 1993,
-    currentValuationKES: 680000000000, // ~KES 680 Billion market cap
-    peakValuationKES: 1700000000000,   // ~KES 1.7 Trillion all-time peak market cap (2021)
-    debtExposureKES: 75000000000,      // Prudent long-term leverage for Ethiopia rollout
-    summary:
-      'The crown jewel of corporate East Africa and the primary pillar of Kenya’s digital economy. Safaricom accounts for roughly 45% of total trading volume on the Nairobi Securities Exchange. Its M-Pesa platform processes over KES 35 Trillion annually in mobile transactions (equivalent to more than 2x Kenya’s Gross Domestic Product), functioning effectively as a national financial utility and critical sovereign economic infrastructure.',
-    timeline: [
-      {
-        id: 'tm-saf-01',
-        assetId: 'ast-safaricom-plc',
-        date: '2007-03-06',
-        title: 'Commercial Launch of M-Pesa',
-        summary: 'World’s first mass-scale mobile money transfer service launched in partnership with Vodafone.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-saf-tm-1',
-          title: 'CBK Approval of M-Pesa Mobile Payment Service',
-          publisher: 'Central Bank of Kenya',
-          publicationDate: '2007-03-06',
-          url: 'https://www.centralbank.go.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Authorization of Safaricom M-Pesa electronic funds transfer platform.',
-        },
-      },
-      {
-        id: 'tm-saf-02',
-        assetId: 'ast-safaricom-plc',
-        date: '2008-06-09',
-        title: 'Historic IPO Listing on the Nairobi Securities Exchange',
-        summary: 'Government of Kenya sells 25% stake in East Africa’s largest public offering, bringing over 800,000 first-time retail investors to the bourse.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-saf-tm-2',
-          title: 'Safaricom IPO Allotment and Listing Bulletin',
-          publisher: 'Capital Markets Authority',
-          publicationDate: '2008-06-09',
-          url: 'https://cma.or.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Listing of 40 billion ordinary shares at KES 5.00 per share.',
-        },
-      },
-      {
-        id: 'tm-saf-03',
-        assetId: 'ast-safaricom-plc',
-        date: '2021-08-15',
-        title: 'All-Time Peak Valuation (KES 1.7 Trillion Market Cap)',
-        summary: 'Share price hits all-time high of KES 44.50 amid surging digital payments and winning the telecommunications license in Ethiopia.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-saf-tm-3',
-          title: 'NSE Market Report August 2021',
-          publisher: 'Nairobi Securities Exchange',
-          publicationDate: '2021-08-15',
-          url: 'https://www.nse.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Safaricom PLC market capitalization exceeds KES 1.7 Trillion, representing 60% of total bourse capitalization.',
-        },
-      },
-    ],
-    valuationHistory: [
-      {
-        date: '2008-06-01',
-        valueKES: 200000000000,
-        metricType: 'MARKET_CAP',
-        citationTitle: 'IPO listing valuation at KES 5.00 per share',
-      },
-      {
-        date: '2021-08-01',
-        valueKES: 1700000000000,
-        metricType: 'MARKET_CAP',
-        citationTitle: 'Peak market cap at KES 44.50 per share',
-      },
-      {
-        date: '2024-09-01',
-        valueKES: 680000000000,
-        metricType: 'MARKET_CAP',
-        citationTitle: 'Current trading valuation at KES 17.00 per share',
-      },
-    ],
-    primaryCitations: [
-      {
-        id: 'cit-saf-pc-1',
-        title: 'Safaricom PLC Audited Annual Report & Financial Statements 2024',
-        publisher: 'Safaricom PLC',
-        publicationDate: '2024-05-09',
-        url: 'https://www.safaricom.co.ke/investor-relations',
-        tier: 'REGULATORY_DISCLOSURE',
-        keyExcerpt: 'Audited revenues of KES 335.3 Billion and M-Pesa contribution to net earnings.',
-      },
-    ],
-    createdAt: '2026-10-11T00:00:00Z',
-    updatedAt: '2026-10-11T00:00:00Z',
-  },
-
-  {
-    id: 'ast-ifb1-2024-infrastructure-bond',
-    slug: 'ifb1-2024-infrastructure-bond',
-    name: 'IFB1/2024/8.5 Sovereign Infrastructure Bond',
-    legalName: 'Central Bank of Kenya Infrastructure Bond IFB1/2024/8.5-Year',
-    assetClass: 'SOVEREIGN_BOND',
-    sector: 'FINANCIAL_SERVICES',
-    subsector: 'Government Treasury Debt Securities',
-    status: 'ACTIVE',
-    county: 'Nairobi',
-    headquarters: 'Central Bank of Kenya, Haile Selassie Avenue, Nairobi',
-    establishedYear: 2024,
-    currentValuationKES: 240900000000, // KES 240.9 Billion total absorbed principal
-    peakValuationKES: 288600000000,    // Total investor bids received (KES 288.6B)
-    summary:
-      'The most heavily subscribed and lucrative domestic sovereign debt auction in Kenya’s post-colonial history. Floating an 8.5-year amortized paper with an eye-popping 18.46% tax-free coupon, the bond sucked KES 240.9 Billion in dry powder out of bank deposits, saccos, retail investors, and foreign institutional portfolios in February 2024, altering domestic capital allocation dynamics and crowding out corporate private credit.',
-    timeline: [
-      {
-        id: 'tm-ifb-01',
-        assetId: 'ast-ifb1-2024-infrastructure-bond',
-        date: '2024-01-24',
-        title: 'CBK Prospectus Release (Target KES 70 Billion)',
-        summary: 'Central Bank announces sale of 8.5-year infrastructure paper to fund road, transport, and water development projects.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-ifb-tm-1',
-          title: 'CBK Prospectus for IFB1/2024/8.5',
-          publisher: 'Central Bank of Kenya',
-          publicationDate: '2024-01-24',
-          url: 'https://www.centralbank.go.ke/bills-and-bonds/treasury-bonds/',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Invitation to bid for KES 70 Billion tax-free infrastructure bond with period of sale ending Feb 14, 2024.',
-        },
-      },
-      {
-        id: 'tm-ifb-02',
-        assetId: 'ast-ifb1-2024-infrastructure-bond',
-        date: '2024-02-14',
-        title: 'Historic Over-Subscription: KES 288.6 Billion in Bids',
-        summary: 'Investors submit 412% oversubscription; CBK accepts record KES 240.9B at weighted average rate of 18.4607%.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-ifb-tm-2',
-          title: 'CBK Auction Results for IFB1/2024/8.5',
-          publisher: 'Central Bank of Kenya',
-          publicationDate: '2024-02-16',
-          url: 'https://www.centralbank.go.ke/wp-content/uploads/2024/02/IFB1-2024-8.5-AUCTION-RESULTS.pdf',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Bids received: KES 288,662.33 Million; Bids accepted: KES 240,932.74 Million; Average rate: 18.4607%.',
-        },
-      },
-      {
-        id: 'tm-ifb-03',
-        assetId: 'ast-ifb1-2024-infrastructure-bond',
-        date: '2024-03-01',
-        title: 'Secondary Market Rally on the NSE',
-        summary: 'IFB1/2024 becomes the most liquid security on the Nairobi bourse, trading at premium clean prices as rates stabilize.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-ifb-tm-3',
-          title: 'NSE Fixed Income Market Bulletin Q1 2024',
-          publisher: 'Nairobi Securities Exchange',
-          publicationDate: '2024-03-31',
-          url: 'https://www.nse.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'IFB1/2024/8.5 records over KES 60 Billion in secondary market turnover within 45 days of listing.',
-        },
-      },
-    ],
-    valuationHistory: [
-      {
-        date: '2024-01-24',
-        valueKES: 70000000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Initial Treasury target amount',
-      },
-      {
-        date: '2024-02-14',
-        valueKES: 288662000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Total investor liquidity bid at auction',
-      },
-      {
-        date: '2024-02-16',
-        valueKES: 240932000000,
-        metricType: 'MARKET_CAP',
-        citationTitle: 'Actual transacted issuance principal accepted by CBK',
-      },
-    ],
-    primaryCitations: [
-      {
-        id: 'cit-ifb-pc-1',
-        title: 'Central Bank of Kenya Official Auction Results IFB1/2024/8.5',
-        publisher: 'Central Bank of Kenya',
-        publicationDate: '2024-02-16',
-        url: 'https://www.centralbank.go.ke',
-        tier: 'REGULATORY_DISCLOSURE',
-        keyExcerpt: 'Verified auction summary and yields accepted.',
-      },
-    ],
-    createdAt: '2026-10-11T00:00:00Z',
-    updatedAt: '2026-10-11T00:00:00Z',
-  },
-
-  {
-    id: 'ast-nairobi-expressway',
-    slug: 'nairobi-expressway',
-    name: 'Nairobi Expressway (Moja Expressway PPP Asset)',
-    legalName: 'Nairobi Expressway Toll Road Public-Private Partnership Asset',
-    assetClass: 'MEGA_INFRASTRUCTURE',
-    sector: 'ENERGY_INFRASTRUCTURE',
-    subsector: 'Transportation Tollways & PPP Concessions',
-    status: 'ACTIVE',
-    county: 'Nairobi',
-    headquarters: 'Expressway Operations Centre, City Cabanas, Mombasa Road, Nairobi',
-    establishedYear: 2020,
-    currentValuationKES: 88000000000, // Total project construction and concession valuation
-    peakValuationKES: 88000000000,
-    summary:
-      'A 27.1-kilometer elevated 4-lane toll highway connecting Jomo Kenyatta International Airport (JKIA) through Nairobi CBD to Westlands (James Gichuru). Built under a 30-year Build-Operate-Transfer (BOT) Public-Private Partnership concession by China Road and Bridge Corporation (CRBC) through its operating arm Moja Expressway Company. The asset collects electronic toll revenues directly in cash and M-Pesa, cutting airport commute times from 2 hours to 15 minutes.',
-    timeline: [
-      {
-        id: 'tm-exp-01',
-        assetId: 'ast-nairobi-expressway',
-        date: '2019-10-15',
-        title: 'PPP Concession Agreement Gazetted',
-        summary: 'Government of Kenya signs 30-year BOT concession contract with CRBC without sovereign debt guarantee.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-exp-tm-1',
-          title: 'Kenya Gazette Notice on Nairobi Expressway Concession',
-          publisher: 'Kenya Gazette Vol. CXXI No. 138',
-          publicationDate: '2019-10-18',
-          url: 'https://kenyalaw.org/kenya_gazette',
-          tier: 'GAZETTE_OFFICIAL',
-          keyExcerpt: 'Declaration of Nairobi Expressway as a Toll Road under the Public Roads Toll Act Cap 407.',
-        },
-      },
-      {
-        id: 'tm-exp-02',
-        assetId: 'ast-nairobi-expressway',
-        date: '2022-07-31',
-        title: 'Presidential Commissioning & Commercial Toll Launch',
-        summary: 'Full public commissioning following trial phase; electronic toll collection via onboard units (OBU) goes live.',
-        impact: 'POSITIVE',
-        citation: {
-          id: 'cit-exp-tm-2',
-          title: 'KeNHA Official Expressway Commissioning Notice',
-          publisher: 'Kenya National Highways Authority',
-          publicationDate: '2022-07-31',
-          url: 'https://kenha.co.ke',
-          tier: 'REGULATORY_DISCLOSURE',
-          keyExcerpt: 'Official opening of the 27.1km expressway for commercial vehicular traffic.',
-        },
-      },
-      {
-        id: 'tm-exp-03',
-        assetId: 'ast-nairobi-expressway',
-        date: '2024-01-01',
-        title: 'Toll Rate Revision Due to Foreign Exchange Adjustments',
-        summary: 'Ministry of Roads revises toll rates upward by ~60% reflecting US Dollar to Kenya Shilling currency movements under the PPP framework.',
-        impact: 'NEUTRAL',
-        citation: {
-          id: 'cit-exp-tm-3',
-          title: 'Kenya Gazette Notice No. 12 on Revised Toll Tariff',
-          publisher: 'Kenya Gazette Vol. CXXVI No. 2',
-          publicationDate: '2024-01-05',
-          url: 'https://kenyalaw.org/kenya_gazette',
-          tier: 'GAZETTE_OFFICIAL',
-          keyExcerpt: 'Adjustment of base toll tariffs pursuant to Section 4B of the Public Roads Toll Act.',
-        },
-      },
-    ],
-    valuationHistory: [
-      {
-        date: '2020-01-01',
-        valueKES: 72000000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Initial project engineering budget contract',
-      },
-      {
-        date: '2022-07-01',
-        valueKES: 88000000000,
-        metricType: 'PEAK_VALUATION',
-        citationTitle: 'Final completed capitalized infrastructure asset value',
-      },
-    ],
-    primaryCitations: [
-      {
-        id: 'cit-exp-pc-1',
-        title: 'Public Private Partnerships Directorate Project Register 2023',
-        publisher: 'National Treasury & Economic Planning',
-        publicationDate: '2023-06-30',
-        url: 'https://ppp.treasury.go.ke',
-        tier: 'REGULATORY_DISCLOSURE',
-        keyExcerpt: 'Project fiche on Nairobi Expressway 30-year concession metrics and equity structure.',
-      },
-    ],
-    createdAt: '2026-10-11T00:00:00Z',
-    updatedAt: '2026-10-11T00:00:00Z',
-  },
 ];
+
+// Combine all sectors and categories
+export const INITIAL_ASSETS: Asset[] = [
+  ...CORPORATE_AUTOPSIES,
+  ...HISTORIC_CORE_ASSETS,
+  ...ACTIVE_BENCHMARKS,
+  ...LAND_CORRIDORS,
+  ...SOVEREIGN_INFRASTRUCTURE,
+];
+
+// Dynamically compute exact macro metrics and failure cause distributions
+const causeCounts: Record<string, number> = {};
+INITIAL_ASSETS.forEach((a) => {
+  if (a.autopsy) {
+    causeCounts[a.autopsy.primaryCause] = (causeCounts[a.autopsy.primaryCause] || 0) + 1;
+  }
+});
+
+const totalAutopsies = Object.values(causeCounts).reduce((a, b) => a + b, 0);
+const computedTopFailureCauses = Object.entries(causeCounts)
+  .sort(([, a], [, b]) => b - a)
+  .map(([cause, count]) => ({
+    cause: cause as AutopsyCauseCategory,
+    count,
+    percentage: Math.round((count / (totalAutopsies || 1)) * 100),
+  }));
 
 export const MACRO_METRICS: MacroMetrics = {
   totalAssetsTracked: INITIAL_ASSETS.length,
@@ -1473,7 +520,7 @@ export const MACRO_METRICS: MacroMetrics = {
     (sum, a) => sum + (a.debtExposureKES || 0),
     0
   ),
-  idleIndustrialSquareFootageEst: 1450000, // Estimated sq ft across dormant industrial sites
+  idleIndustrialSquareFootageEst: 3850000, // Estimated sq ft across dormant industrial sites
   byAssetClass: {
     ENTERPRISE_COLLAPSED: INITIAL_ASSETS.filter((a) => a.assetClass === 'ENTERPRISE_COLLAPSED').length,
     ENTERPRISE_DISTRESSED: INITIAL_ASSETS.filter((a) => a.assetClass === 'ENTERPRISE_DISTRESSED').length,
@@ -1503,9 +550,5 @@ export const MACRO_METRICS: MacroMetrics = {
     DEFUNCT: INITIAL_ASSETS.filter((a) => a.status === 'DEFUNCT').length,
     REVITALIZED: INITIAL_ASSETS.filter((a) => a.status === 'REVITALIZED').length,
   },
-  topFailureCauses: [
-    { cause: 'DEBT_OVERLEVERAGE', count: 2, percentage: 40 },
-    { cause: 'GOVERNANCE_FRAUD', count: 2, percentage: 40 },
-    { cause: 'REGULATORY_TAX_POLICY', count: 1, percentage: 20 },
-  ],
+  topFailureCauses: computedTopFailureCauses,
 };
