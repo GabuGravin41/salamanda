@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Activity, BarChart3, Database, MapPin, Landmark, Layers } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 export function Navbar() {
   return (
@@ -81,18 +82,20 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Right Status Indicator */}
-          <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-800/50 text-emerald-400 text-xs">
-              <ShieldCheck className="w-4 h-4" />
-              <span>100% Primary Sourced (Kenya Gazette / eKLR)</span>
+          {/* Right Status Indicator & Theme Toggle */}
+          <div className="flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-surface border border-surface-border text-slate-300 text-xs">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Primary Records (Gazette / eKLR)</span>
             </div>
+
+            <ThemeToggle />
 
             <Link
               href="/assets"
-              className="inline-flex items-center justify-center px-3.5 py-1.5 text-xs font-semibold rounded-md bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-colors shadow-sm"
+              className="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
             >
-              Browse Terminal
+              Terminal
             </Link>
           </div>
         </div>

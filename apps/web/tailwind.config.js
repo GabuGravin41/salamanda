@@ -8,12 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: '#090D16',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
         surface: {
-          DEFAULT: '#0F172A',
-          hover: '#1E293B',
-          subtle: '#131C31',
-          border: '#1E293B',
+          DEFAULT: 'var(--surface)',
+          hover: '#1e293b',
+          subtle: '#131c31',
+          border: 'var(--surface-border)',
         },
         terminal: {
           green: '#10B981',
@@ -22,6 +23,11 @@ module.exports = {
           cyan: '#06B6D4',
           purple: '#8B5CF6',
         },
+      },
+      fontFamily: {
+        sans: ['DM Sans', 'sans-serif'],
+        heading: ['Manrope', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
     },
   },

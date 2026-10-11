@@ -18,32 +18,32 @@ export function AssetCard({ asset }: AssetCardProps) {
     asset.status === 'UNDER_ADMINISTRATION';
 
   return (
-    <div className="group relative bg-surface/90 hover:bg-surface border border-surface-border hover:border-slate-700 rounded-xl p-5 transition-all duration-200 flex flex-col justify-between shadow-sm hover:shadow-md">
+    <div className="group relative bg-surface/70 hover:bg-surface border border-surface-border hover:border-slate-700 rounded-lg p-5 transition-all flex flex-col justify-between">
       <div>
         {/* Top Badges */}
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+        <div className="flex items-center justify-between gap-2 mb-2.5">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-surface border border-surface-border text-slate-400">
               {formatAssetClassLabel(asset.assetClass)}
             </span>
             <StatusBadge status={asset.status} />
           </div>
           <Link
             href={`/assets/${asset.slug}`}
-            className="text-slate-400 group-hover:text-emerald-400 transition-colors p-1 rounded hover:bg-slate-800"
+            className="text-slate-500 hover:text-slate-300 transition-colors"
             title="View Asset Intelligence & Autopsy"
           >
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {/* Title & Legal Name */}
         <Link href={`/assets/${asset.slug}`} className="block">
-          <h3 className="text-lg font-bold text-slate-100 group-hover:text-emerald-400 transition-colors tracking-tight">
+          <h3 className="text-base font-bold text-slate-100 group-hover:text-emerald-400 transition-colors tracking-tight">
             {asset.name}
           </h3>
           {asset.legalName && asset.legalName !== asset.name && (
-            <p className="text-xs text-slate-400 font-mono truncate mt-0.5">
+            <p className="text-[11px] text-slate-400 font-mono truncate mt-0.5">
               {asset.legalName}
             </p>
           )}

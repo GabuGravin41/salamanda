@@ -15,54 +15,44 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-10">
-      {/* Hero Terminal Header */}
-      <section className="relative overflow-hidden rounded-2xl border border-surface-border bg-gradient-to-b from-surface/90 via-surface/60 to-background p-6 sm:p-10 shadow-lg">
-        <div className="relative z-10 max-w-4xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>KENYAN ASSET REPOSITORY & AUTOPSY TERMINAL</span>
+      {/* Hero Header */}
+      <section className="relative overflow-hidden rounded-xl border border-surface-border bg-surface/40 p-6 sm:p-10">
+        <div className="relative z-10 max-w-3xl space-y-3">
+          <div className="text-[11px] font-mono tracking-widest uppercase text-slate-400">
+            Kenya Asset Intelligence & Forensic Autopsies
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            African Capital Deserves <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-              Operational Truth.
-            </span>
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+            Operational Truth for African Capital.
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl">
-            Inspired by BlackRock’s Aladdin, re-engineered for the African frontier. Salamanda chronicles
-            living assets, idle industrial machinery, land corridors, and the forensic autopsies of collapsed
-            enterprises—with <strong>every number, timeline event, and failure cause tethered directly to primary public records</strong>.
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl pt-1">
+            Living asset registry, industrial capacity tracking, and public-record corporate forensics for Kenya.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-2.5 pt-3">
+            <Link
+              href="/assets"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors"
+            >
+              Browse Asset Registry
+            </Link>
             <Link
               href="/autopsies"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold shadow transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface hover:bg-surface-hover border border-surface-border text-slate-200 text-xs font-medium transition-colors"
             >
-              <Activity className="w-4 h-4" />
-              Explore Failure Autopsies
+              <Activity className="w-3.5 h-3.5 text-rose-400" />
+              Corporate Autopsies
             </Link>
             <Link
               href="/land"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface hover:bg-surface-hover border border-slate-700 text-slate-200 text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface hover:bg-surface-hover border border-surface-border text-slate-200 text-xs font-medium transition-colors"
             >
-              <TrendingUp className="w-4 h-4 text-amber-400" />
-              Land Price Indices
-            </Link>
-            <Link
-              href="/sources"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface hover:bg-surface-hover border border-slate-700 text-slate-200 text-xs font-semibold transition-colors"
-            >
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              Public Record Citations
+              <TrendingUp className="w-3.5 h-3.5 text-amber-400" />
+              Land Benchmarks
             </Link>
           </div>
         </div>
-
-        {/* Subtle background glow */}
-        <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       </section>
 
       {/* Macro Economic Pulse Cards */}
