@@ -1,101 +1,83 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Activity, BarChart3, Database, MapPin, Landmark, Layers } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import Image from 'next/image';
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-surface-border bg-background/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-surface-border bg-surface/90 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           {/* Logo & Brand */}
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg group-hover:border-emerald-400 group-hover:bg-emerald-500/20 transition-all shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-                S
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold tracking-tight text-slate-100 text-lg group-hover:text-emerald-400 transition-colors">
-                    SALAMANDA
-                  </span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-slate-800 text-emerald-400 border border-slate-700">
-                    Terminal v0.1
-                  </span>
-                </div>
-                <p className="text-[10px] text-slate-400 hidden sm:block tracking-wide">
-                  African Real Economy & Asset Intelligence
-                </p>
-              </div>
+            <Link href="/" className="flex items-center gap-2.5">
+              <Image
+                src="/logo.png"
+                alt="Salamanda Logo"
+                width={28}
+                height={28}
+                className="rounded-sm object-contain"
+              />
+              <span className="font-semibold text-foreground tracking-tight text-base">
+                Salamanda
+              </span>
             </Link>
 
             {/* Main Navigation */}
-            <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+            <nav className="hidden md:flex items-center gap-1 text-[13px] text-muted-foreground">
               <Link
                 href="/assets"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
               >
-                Asset Registry
+                Assets
               </Link>
               <Link
                 href="/autopsies"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
               >
-                <Activity className="w-4 h-4 text-rose-400" />
-                Failure Autopsies
-              </Link>
-              <Link
-                href="/land"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
-              >
-                <MapPin className="w-4 h-4 text-amber-400" />
-                Land & Soil
-              </Link>
-              <Link
-                href="/infrastructure"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
-              >
-                <Landmark className="w-4 h-4 text-cyan-400" />
-                Sovereign & PPP
+                Autopsies
               </Link>
               <Link
                 href="/players"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
               >
-                <BarChart3 className="w-4 h-4 text-purple-400" />
                 Power Players
               </Link>
               <Link
                 href="/pipeline"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
               >
-                <Layers className="w-4 h-4 text-amber-400" />
                 Deal Pipeline
               </Link>
               <Link
-                href="/sources"
-                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
+                href="/land"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
               >
-                <Database className="w-4 h-4 text-emerald-400" />
-                Source Gazette
+                Land
+              </Link>
+              <Link
+                href="/infrastructure"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
+              >
+                Infrastructure
+              </Link>
+              <Link
+                href="/sources"
+                className="px-3 py-1.5 rounded-md hover:text-foreground hover:bg-surface-hover transition-colors"
+              >
+                Sources
               </Link>
             </nav>
           </div>
 
           {/* Right Status Indicator & Theme Toggle */}
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-surface border border-surface-border text-slate-300 text-xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Primary Records (Gazette / eKLR)</span>
-            </div>
-
+          <div className="flex items-center gap-2.5">
             <ThemeToggle />
-
             <Link
               href="/assets"
-              className="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
+              className="text-xs px-3 py-1.5 rounded border border-surface-border text-foreground hover:bg-surface-hover transition-colors"
             >
-              Terminal
+              Search Registry
             </Link>
           </div>
         </div>
@@ -103,3 +85,4 @@ export function Navbar() {
     </header>
   );
 }
+
