@@ -2,23 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAssetBySlug } from '@salamanda/database';
-import { StatusBadge } from '../../../components/ui/StatusBadge';
-import { SourceBadge } from '../../../components/ui/SourceBadge';
-import { AutopsyViewer } from '../../../components/AutopsyViewer';
-import { TimelineViewer } from '../../../components/TimelineViewer';
-import { ValuationTracker } from '../../../components/ValuationTracker';
 import { formatKES, formatAssetClassLabel, formatSectorLabel } from '../../../lib/formatters';
 import {
   ArrowLeft,
-  Building2,
   MapPin,
   Calendar,
   ExternalLink,
   ShieldCheck,
-  AlertTriangle,
   FileText,
   Activity,
   History,
+  Scale,
 } from 'lucide-react';
 
 interface AssetDetailPageProps {
@@ -42,207 +36,226 @@ export default async function AssetDetailPage({ params }: AssetDetailPageProps) 
     asset.status === 'UNDER_ADMINISTRATION';
 
   return (
-    <div className="space-y-8">
-      {/* Top Breadcrumb & Return Link */}
+    <div className="space-y-6 max-w-5xl">
+      {/* Return link */}
       <div>
         <Link
           href="/assets"
-          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Asset Directory
+          <ArrowLeft size={13} />
+          <span>Back to Asset Registry</span>
         </Link>
       </div>
 
-      {/* Asset Header Dossier */}
-      <div className="bg-surface/90 border border-surface-border rounded-2xl p-6 sm:p-8 space-y-6">
+      {/* Main Dossier Header Card */}
+      <article className="research-card space-y-6">
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-mono uppercase tracking-wider px-2.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+              <span className="small-label">
                 {formatAssetClassLabel(asset.assetClass)}
               </span>
-              <StatusBadge status={asset.status} />
-              <span className="text-xs font-mono text-slate-400">
-                ID: {asset.id}
+              <span
+                className={`status-badge ${
+                  asset.status === 'ACTIVE'
+                    ? 'status-active'
+                    : isDeadOrDistressed
+                    ? 'status-distressed'
+                    : 'status-idle'
+                }`}
+              >
+                <span />
+                {asset.status.replace(/_/g, ' ')}
+              </span>
+              <span className="text-[10px] font-mono text-muted-foreground">
+                REF: {asset.id}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
               {asset.name}
             </h1>
 
             {asset.legalName && asset.legalName !== asset.name && (
-              <p className="text-xs sm:text-sm text-slate-400 font-mono">
+              <p className="text-xs text-muted-foreground font-mono">
                 Legal Entity: {asset.legalName}
               </p>
             )}
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-300 pt-1">
-              <span className="font-semibold text-emerald-400">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground pt-1">
+              <span className="font-semibold text-primary">
                 {formatSectorLabel(asset.sector)}
               </span>
-              <span>•</span>
-              <span className="text-slate-400">{asset.subsector}</span>
-              <span>•</span>
-              <span className="flex items-center gap-1 text-slate-300">
-                <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                {asset.county}
+              <span>·</span>
+              <span>{asset.subsector}</span>
+              <span>·</span>
+              <span className="flex items-center gap-1 text-foreground">
+                <MapPin size={12} className="text-muted-foreground" />
+                {asset.county || 'Kenya'}
+              </span>
+              <span>·</span>
+              <span className="flex items-center gap-1">
+                <Calendar size={12} className="text-muted-foreground" />
+                Est. {asset.establishedYear}
+                {asset.defunctYear && ` – ${asset.defunctYear}`}
               </span>
               {asset.googleMapsUrl && (
                 <>
-                  <span>•</span>
+                  <span>·</span>
                   <a
                     href={asset.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-cyan-950/40 text-cyan-400 border border-cyan-800/60 font-mono hover:bg-cyan-900/50 hover:text-cyan-300 transition-colors"
+                    className="inline-flex items-center gap-1 text-primary hover:underline"
                   >
-                    <MapPin className="w-3 h-3" />
-                    <span>View on Google Maps ↗</span>
+                    <span>View on Maps</span>
+                    <ExternalLink size={10} />
                   </a>
                 </>
               )}
-              <span>•</span>
-              <span className="flex items-center gap-1 text-slate-300">
-                <Calendar className="w-3.5 h-3.5 text-slate-500" />
-                Est. {asset.establishedYear}
-                {asset.defunctYear && ` - ${asset.defunctYear}`}
-              </span>
             </div>
           </div>
 
           {/* Key Capital Metrics Card */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 min-w-[260px] space-y-3">
+          <div className="p-4 bg-muted/40 border border-border rounded min-w-[240px] space-y-3">
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+              <span className="detail-label">
                 {asset.assetClass === 'LAND_BENCHMARK'
-                  ? 'Price Per Acre (2024)'
+                  ? 'PRICE PER ACRE (2024)'
                   : isDeadOrDistressed
-                  ? 'Peak Valuation (Pre-Collapse)'
-                  : 'Current Enterprise Valuation'}
+                  ? 'PEAK VALUATION'
+                  : 'ENTERPRISE VALUATION'}
               </span>
-              <span
-                className={`text-xl font-bold font-mono ${
-                  isDeadOrDistressed ? 'text-slate-300 line-through' : 'text-emerald-400'
-                }`}
-              >
+              <span className="text-2xl font-bold font-mono text-foreground">
                 {formatKES(isDeadOrDistressed ? asset.peakValuationKES : asset.currentValuationKES)}
               </span>
             </div>
 
             {asset.debtExposureKES ? (
-              <div className="pt-2 border-t border-slate-800">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-rose-400 block">
-                  Debt & Creditor Liabilities
-                </span>
-                <span className="text-base font-bold font-mono text-rose-400">
+              <div className="pt-2 border-t border-border">
+                <span className="detail-label">CREDITOR LIABILITIES</span>
+                <span className="text-sm font-bold font-mono text-foreground">
                   {formatKES(asset.debtExposureKES)}
                 </span>
               </div>
             ) : null}
 
             {asset.headquarters && (
-              <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
-                <span className="block text-[10px] font-mono uppercase text-slate-500">Location:</span>
-                {asset.headquarters}
+              <div className="pt-2 border-t border-border text-xs text-muted-foreground">
+                <span className="detail-label">PHYSICAL SITE</span>
+                <span className="text-foreground">{asset.headquarters}</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Operational Overview Narrative */}
-        <div className="pt-4 border-t border-surface-border text-sm text-slate-200 leading-relaxed max-w-4xl">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-1.5">
-            Operational Overview & Context
-          </h2>
-          <p>{asset.summary}</p>
+        <div className="pt-4 border-t border-border space-y-2">
+          <span className="detail-label">OPERATIONAL SUMMARY</span>
+          <p className="text-xs text-foreground/90 leading-relaxed max-w-3xl">
+            {asset.summary}
+          </p>
         </div>
-      </div>
+      </article>
 
       {/* Forensic Autopsy Section (If present) */}
       {asset.autopsy && (
-        <section className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Activity className="w-5 h-5 text-rose-400" />
-            <h2 className="text-lg font-bold tracking-tight text-white">
-              Forensic Failure Autopsy
-            </h2>
+        <section className="research-card space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Activity size={16} className="text-primary" />
+              <h2 className="text-base font-semibold text-foreground">
+                Forensic Failure Autopsy
+              </h2>
+            </div>
+            <span className="verification verified-primary">
+              <ShieldCheck size={12} />
+              Verified liquidation filing
+            </span>
           </div>
-          <AutopsyViewer autopsy={asset.autopsy} assetName={asset.name} />
+
+          <div className="p-3 bg-muted/40 rounded border border-border text-xs space-y-2">
+            <span className="detail-label">PRIMARY FAILURE MODE</span>
+            <p className="font-semibold text-foreground">
+              {asset.autopsy.primaryCause.replace(/_/g, ' ')}
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              {asset.autopsy.executiveSummary}
+            </p>
+          </div>
+
+          {asset.autopsy.citations && asset.autopsy.citations.length > 0 && (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2">
+              <Scale size={13} className="text-primary" />
+              <span className="font-mono">
+                Citation: {asset.autopsy.citations[0].referenceNumber || asset.autopsy.citations[0].title}
+              </span>
+            </div>
+          )}
         </section>
       )}
 
-      {/* Lifecycle Timeline */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2">
-          <History className="w-5 h-5 text-emerald-400" />
-          <h2 className="text-lg font-bold tracking-tight text-white">
-            Verified Event Timeline
-          </h2>
-        </div>
-        <TimelineViewer events={asset.timeline} />
-      </section>
-
-      {/* Valuation History */}
-      <section className="space-y-4">
-        <ValuationTracker history={asset.valuationHistory} assetName={asset.name} />
-      </section>
-
-      {/* Primary Sourced Records Audit */}
-      <section className="bg-surface/80 border border-surface-border rounded-xl p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-emerald-400" />
-            <h2 className="text-sm font-mono uppercase tracking-wider text-slate-200 font-bold">
-              Mandatory Sourcing Audit Trail
-            </h2>
+      {/* Primary Sourced Citations */}
+      {asset.primaryCitations && asset.primaryCitations.length > 0 && (
+        <section className="research-card space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ShieldCheck size={16} className="text-primary" />
+              <h2 className="text-base font-semibold text-foreground">
+                Primary Citations Audit Trail
+              </h2>
+            </div>
+            <span className="count-badge">
+              {asset.primaryCitations.length} Records
+            </span>
           </div>
-          <span className="text-xs font-mono text-emerald-400">
-            {asset.primaryCitations.length} Primary Records
-          </span>
-        </div>
 
-        <p className="text-xs text-slate-400 leading-relaxed">
-          Every statement, valuation marker, and date regarding {asset.name} is tethered to verifiable public records
-          to prevent unverified speculation and safeguard against misrepresentation.
-        </p>
+          <div className="space-y-3">
+            {asset.primaryCitations.map((cit) => (
+              <div
+                key={cit.id}
+                className="p-3.5 rounded border border-border bg-card space-y-1.5"
+              >
+                <div className="flex items-center justify-between">
+                  <strong className="text-xs font-semibold text-foreground">
+                    {cit.title}
+                  </strong>
+                  <span className="verification verified-primary">
+                    {cit.referenceNumber || 'Statutory Filing'}
+                  </span>
+                </div>
 
-        <div className="space-y-3 pt-2">
-          {asset.primaryCitations.map((cit) => (
-            <div
-              key={cit.id}
-              className="p-4 rounded-lg bg-slate-900/60 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-200">{cit.title}</span>
-                  <SourceBadge tier={cit.tier} refNumber={cit.referenceNumber} />
+                <div className="text-[11px] text-muted-foreground">
+                  <span>Publisher: {cit.publisher}</span>
+                  <span> · </span>
+                  <span>Date: {cit.publicationDate}</span>
                 </div>
-                <div className="text-xs text-slate-400 font-mono">
-                  Publisher: {cit.publisher} • Date: {cit.publicationDate}
-                </div>
+
                 {cit.keyExcerpt && (
-                  <p className="text-xs text-slate-300 font-mono italic bg-slate-950/60 p-2 rounded mt-1 border-l-2 border-emerald-500/60">
+                  <p className="text-xs text-muted-foreground italic bg-muted/50 p-2.5 rounded border-l-2 border-primary mt-1">
                     "{cit.keyExcerpt}"
                   </p>
                 )}
-              </div>
 
-              {cit.url && (
-                <a
-                  href={cit.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 whitespace-nowrap self-start md:self-center transition-colors"
-                >
-                  <span>Open Public Record</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
+                {cit.url && (
+                  <div className="pt-1">
+                    <a
+                      href={cit.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline"
+                    >
+                      <span>Open public record</span>
+                      <ExternalLink size={10} />
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

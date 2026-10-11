@@ -11,14 +11,14 @@ export function ThemeToggle() {
     <button
       onClick={toggleTheme}
       type="button"
-      className="p-1.5 rounded-md text-slate-400 hover:text-slate-200 hover:bg-surface transition-colors border border-surface-border"
-      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors border border-border flex items-center justify-center"
+      title={theme === 'dark' ? 'Switch to calm day mode' : 'Switch to night mode'}
       aria-label="Toggle theme"
     >
       {theme === 'dark' ? (
-        <Sun className="w-4 h-4 text-amber-300" />
+        <Sun size={14} className="text-amber-400" />
       ) : (
-        <Moon className="w-4 h-4 text-slate-700" />
+        <Moon size={14} className="text-muted-foreground" />
       )}
     </button>
   );
