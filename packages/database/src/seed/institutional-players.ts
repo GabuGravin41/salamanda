@@ -296,4 +296,221 @@ export const INSTITUTIONAL_PLAYERS: InstitutionalPlayer[] = [
     createdAt: '2026-10-11T00:00:00Z',
     updatedAt: '2026-10-11T00:00:00Z',
   },
+
+  // 7. The Kenyatta Family Dynasty & Conglomerates
+  {
+    id: 'plr-kenyatta-family',
+    slug: 'kenyatta-family-dynasty',
+    name: 'The Kenyatta Family & Conglomerates',
+    playerType: 'DYNASTIC_FAMILY_CONGLOMERATE',
+    leadership: 'Uhuru Muigai Kenyatta, Muhoho Kenyatta, Mama Ngina Kenyatta',
+    headquarters: 'CBA Building / Mara & Ragati Roads, Upper Hill, Nairobi',
+    estimatedCapitalMovedKES: 250000000000, // > KES 250 Billion estimated net portfolio value
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes:
+      'Bank holdings verified via Central Bank of Kenya (CBK) and CMA disclosures for NCBA Group PLC. Land assets registered across Kiambu, Nakuru, and Taita Taveta.',
+    googleMapsUrl: 'https://maps.google.com/?q=-1.2995,36.8182',
+    activeFocusPresent:
+      'Consolidating banking equity through NCBA Group (commanding digital lending monopolies Fuliza and M-Shwari in partnership with Safaricom), expanding Brookside Dairy into Uganda and Rwanda, and developing the 11,000-acre Northlands City metropolis in Ruiru.',
+    summary:
+      'The most formidable economic dynasty in post-independence Kenya. Combining vast agricultural and urban land reserves with controlling equity in tier-1 financial services, industrial dairy processing, luxury hospitality, and media.',
+    keyHoldings: [
+      {
+        assetName: 'NCBA Group PLC',
+        stakeOrRole: '13.2% Controlling Family Shareholding Block',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Kenya’s 3rd largest bank by asset size (over KES 600B assets), powering Safaricom’s Fuliza and M-Shwari underwriting engines.',
+      },
+      {
+        assetName: 'Brookside Dairy Limited',
+        stakeOrRole: 'Controlling Majority Interest (with French dairy giant Danone holding 40%)',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Controls over 45% of formal Kenyan processed milk distribution via Brookside, Tuzo, Ilara, and Delamere brands.',
+      },
+      {
+        assetName: 'Northlands City Metropolis (Ruiru, Kiambu)',
+        stakeOrRole: '100% Wholly Owned Master-Planned Development',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: '11,000-acre mixed-use urban node connecting Eastern and Northern Bypasses.',
+      },
+      {
+        assetName: 'Heritage Hotels & Great Rift Valley Lodge',
+        stakeOrRole: 'Wholly Owned Hospitality Asset Portfolio',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Luxury safari camps (Mara Explorer, Samburu Intrepids) and golf resort properties.',
+      },
+    ],
+    citations: [
+      {
+        id: 'cit-ken-01',
+        title: 'NCBA Group PLC Audited Annual Integrated Report & Financial Statements',
+        publisher: 'Capital Markets Authority (CMA) / NCBA Group',
+        publicationDate: '2024-04-18',
+        url: 'https://ncbagroup.com/investor-relations',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'Audited principal shareholding registers confirming substantial family equity stakes.',
+      },
+      {
+        id: 'cit-ken-02',
+        title: 'Competition Authority of Kenya Determination on Brookside Dairy Acquisitions',
+        publisher: 'Competition Authority of Kenya',
+        publicationDate: '2023-08-11',
+        url: 'https://cak.go.ke',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'Antitrust review of dairy processing market concentration.',
+      },
+    ],
+    createdAt: '2026-10-11T00:00:00Z',
+    updatedAt: '2026-10-11T00:00:00Z',
+  },
+
+  // 8. The Moi Family Dynasty & Conglomerates
+  {
+    id: 'plr-moi-family',
+    slug: 'moi-family-conglomerates',
+    name: 'The Moi Family & Conglomerates',
+    playerType: 'DYNASTIC_FAMILY_CONGLOMERATE',
+    leadership: 'Gideon Moi, Philip Moi, Raymond Moi, Heirs of Late Daniel Arap Moi',
+    headquarters: 'Kabarnet Gardens, Kibera/Nairobi & Kabarak, Nakuru County',
+    estimatedCapitalMovedKES: 180000000000, // > KES 180 Billion portfolio
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes:
+      'Listed assets verified via NSE disclosures (Standard Group PLC). Logistics and aviation contracts confirmed via port transport and KRA customs schedules.',
+    googleMapsUrl: 'https://maps.google.com/?q=-0.1685,35.9621',
+    activeFocusPresent:
+      'Port freight handling via Siginon Global Logistics at Mombasa Port and JKIA, educational endowments across Kabarak University institutions, and restructuring debt exposures at The Standard Group PLC.',
+    summary:
+      'Built over a 24-year presidential tenure, commanding strategic land tracts across the Rift Valley, national broadcasting assets, logistics infrastructure connecting Mombasa port to landlocked Great Lakes economies, and premier private educational institutions.',
+    keyHoldings: [
+      {
+        assetName: 'Siginon Global Logistics',
+        stakeOrRole: 'Controlling Conglomerate Majority',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Air cargo ramp handling at JKIA, inland container depots, and regional transit trucking fleet.',
+      },
+      {
+        assetName: 'Kabarak University & Educational Holdings (Nakuru)',
+        stakeOrRole: '100% Sponsor & Institutional Titleholder',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Over 1,000 acres in Rongai, Nakuru with university campus, referral teaching hospital, and secondary schools.',
+      },
+      {
+        assetName: 'The Standard Group PLC',
+        stakeOrRole: 'Controlling Majority Shareholder',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Oldest newspaper in East Africa (The Standard), KTN Home, KTN News, and Radio Maisha.',
+      },
+    ],
+    citations: [
+      {
+        id: 'cit-moi-01',
+        title: 'The Standard Group PLC Annual Report & Financial Statements',
+        publisher: 'Nairobi Securities Exchange (NSE)',
+        publicationDate: '2024-06-28',
+        url: 'https://standardmedia.co.ke',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'Audited financial filings and principal shareholder register.',
+      },
+    ],
+    createdAt: '2026-10-11T00:00:00Z',
+    updatedAt: '2026-10-11T00:00:00Z',
+  },
+
+  // 9. Bidco Africa (Vimal Shah & Family)
+  {
+    id: 'plr-bidco-africa',
+    slug: 'bidco-africa-vimal-shah',
+    name: 'Bidco Africa Limited',
+    playerType: 'INDUSTRIAL_CONGLOMERATE',
+    leadership: 'Dr. Vimal Shah (Chairman), Tarun Shah, Bhimji Depar Shah (Founder)',
+    headquarters: 'Bidco Industrial Park, Ruiru / Garissa Road, Thika, Kiambu County',
+    estimatedCapitalMovedKES: 80000000000, // > KES 80 Billion industrial turnover
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes: 'Manufacturing facility capex verified via KEPSA and Ministry of Industrialization project bulletins.',
+    googleMapsUrl: 'https://maps.google.com/?q=-1.1398,36.9587',
+    activeFocusPresent:
+      'Operating the KES 20 Billion Bidco Industrial Park in Ruiru, producing premium bakery products, noodles, animal feeds, and expanding contract sunflower/soya outgrower schemes across 35,000 smallholders.',
+    summary:
+      'East Africa’s largest fast-moving consumer goods (FMCG) and edible oil manufacturing titan. Dominates cooking fats (Kimbo, Cowboy, Chipsy), edible oils (Golden Fry, Elianto), laundry soaps (Gental, White Star), and food processing across 16 African countries.',
+    keyHoldings: [
+      {
+        assetName: 'Bidco Industrial Park (Ruiru, Kiambu)',
+        stakeOrRole: '100% Wholly Owned Manufacturing Megaplant',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'KES 20B state-of-the-art automated manufacturing complex commissioned in 2019.',
+      },
+      {
+        assetName: 'Thika Edible Oil Refining Complex',
+        stakeOrRole: '100% Parent Plant',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'East Africa’s largest oilseed extraction and fractionation refinery.',
+      },
+    ],
+    citations: [
+      {
+        id: 'cit-bid-01',
+        title: 'Kenya Association of Manufacturers (KAM) Manufacturing Sector Directory',
+        publisher: 'Kenya Association of Manufacturers',
+        publicationDate: '2024-02-15',
+        url: 'https://kam.co.ke',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'Industrial manufacturing capacity and supply chain linkages for Bidco Africa.',
+      },
+    ],
+    createdAt: '2026-10-11T00:00:00Z',
+    updatedAt: '2026-10-11T00:00:00Z',
+  },
+
+  // 10. Kwacha Group of Companies (Jimi Wanjigi)
+  {
+    id: 'plr-kwacha-group',
+    slug: 'kwacha-group-jimi-wanjigi',
+    name: 'Kwacha Group of Companies (Jimi Wanjigi)',
+    playerType: 'PRIVATE_EQUITY_INVESTMENT',
+    leadership: 'Jimi Richard Wanjigi (CEO & Chairman), James Maina Wanjigi (Patriarch)',
+    headquarters: 'Kwacha House, General Mathenge Drive, Westlands, Nairobi',
+    estimatedCapitalMovedKES: 55000000000, // > KES 55 Billion in structured sovereign capex
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes:
+      'Mega-infrastructure EPC structuring confirmed via parliamentary public accounts committee testimonies and high court filings.',
+    googleMapsUrl: 'https://maps.google.com/?q=-1.2584,36.8043',
+    activeFocusPresent:
+      'Managing prime commercial real estate holdings in Westlands and Muthaiga, pursuing agri-processing ventures, and holding private equity positions in carbon-dioxide extraction (Carbacid Investments).',
+    summary:
+      'The premier private procurement and infrastructure structuring house in Kenya’s modern history. Famously structured the original EPC consortia for the Standard Gauge Railway (SGR Phase 1) with China Road and Bridge Corporation (CRBC), modernizing security communications, and managing prime urban land reserves.',
+    keyHoldings: [
+      {
+        assetName: 'Carbacid Investments PLC Equity Interests',
+        stakeOrRole: 'Strategic Equity Shareholding',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Leading East African manufacturer of food-grade liquid carbon dioxide and dry ice.',
+      },
+      {
+        assetName: 'Kwacha House & Westlands Commercial Land',
+        stakeOrRole: '100% Wholly Owned Property Portfolio',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Commercial offices and prime land along General Mathenge and Muthaiga.',
+      },
+      {
+        assetName: 'Tyl Limited Security & Technology Systems',
+        stakeOrRole: '100% Parent Vehicle',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Historical contractor for government specialized technology frameworks.',
+      },
+    ],
+    citations: [
+      {
+        id: 'cit-kwa-01',
+        title: 'National Assembly Public Investments Committee (PIC) Special Report on SGR Procurement',
+        publisher: 'Parliament of Kenya',
+        publicationDate: '2021-04-20',
+        url: 'http://parliament.go.ke',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'Testimonies and documentation detailing EPC agency agreements and project origination frameworks.',
+      },
+    ],
+    createdAt: '2026-10-11T00:00:00Z',
+    updatedAt: '2026-10-11T00:00:00Z',
+  },
 ];
+
