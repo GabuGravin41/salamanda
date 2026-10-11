@@ -57,6 +57,20 @@ export function AssetCard({ asset }: AssetCardProps) {
             <MapPin className="w-3 h-3 text-slate-500" />
             {asset.county}
           </span>
+          {asset.googleMapsUrl && (
+            <>
+              <span>•</span>
+              <a
+                href={asset.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 underline underline-offset-2"
+                title="View physical coordinates on Google Maps"
+              >
+                Maps GPS ↗
+              </a>
+            </>
+          )}
           <span>•</span>
           <span className="flex items-center gap-1">
             <Calendar className="w-3 h-3 text-slate-500" />

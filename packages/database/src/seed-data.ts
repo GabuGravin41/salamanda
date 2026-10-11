@@ -529,6 +529,8 @@ export const MACRO_METRICS: MacroMetrics = {
     LAND_BENCHMARK: INITIAL_ASSETS.filter((a) => a.assetClass === 'LAND_BENCHMARK').length,
     SOVEREIGN_BOND: INITIAL_ASSETS.filter((a) => a.assetClass === 'SOVEREIGN_BOND').length,
     MEGA_INFRASTRUCTURE: INITIAL_ASSETS.filter((a) => a.assetClass === 'MEGA_INFRASTRUCTURE').length,
+    EDUCATIONAL_FOUNDATION: INITIAL_ASSETS.filter((a) => a.assetClass === 'EDUCATIONAL_FOUNDATION').length,
+    CONGLOMERATE_HOLDING: INITIAL_ASSETS.filter((a) => a.assetClass === 'CONGLOMERATE_HOLDING').length,
   },
   bySector: {
     MANUFACTURING: INITIAL_ASSETS.filter((a) => a.sector === 'MANUFACTURING').length,
@@ -540,6 +542,7 @@ export const MACRO_METRICS: MacroMetrics = {
     TECHNOLOGY_FINTECH: INITIAL_ASSETS.filter((a) => a.sector === 'TECHNOLOGY_FINTECH').length,
     ENERGY_INFRASTRUCTURE: INITIAL_ASSETS.filter((a) => a.sector === 'ENERGY_INFRASTRUCTURE').length,
     HEALTHCARE_PHARMA: 0,
+    EDUCATION_PHILANTHROPY: INITIAL_ASSETS.filter((a) => a.sector === 'EDUCATION_PHILANTHROPY').length,
   },
   byStatus: {
     ACTIVE: INITIAL_ASSETS.filter((a) => a.status === 'ACTIVE').length,

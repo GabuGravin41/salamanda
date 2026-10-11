@@ -10,7 +10,9 @@ export type AssetClass =
   | 'INDUSTRIAL_IDLE'          // Stranded industrial plants, dead ginneries, underutilized mills
   | 'LAND_BENCHMARK'           // Real estate land value benchmarks per acre across counties
   | 'SOVEREIGN_BOND'           // Treasury & infrastructure bonds, sovereign debt securities
-  | 'MEGA_INFRASTRUCTURE';     // SGR, Nairobi Expressway, Lamu Port, Geothermal projects
+  | 'MEGA_INFRASTRUCTURE'      // SGR, Nairobi Expressway, Lamu Port, Geothermal projects
+  | 'EDUCATIONAL_FOUNDATION'   // Educational endowments, scholarship trusts (e.g. JKF, Equity Foundation)
+  | 'CONGLOMERATE_HOLDING';    // Diversified private conglomerates (e.g. Devki, Centum, Rai Group)
 
 export type Sector =
   | 'MANUFACTURING'
@@ -21,7 +23,8 @@ export type Sector =
   | 'REAL_ESTATE_LAND'
   | 'TECHNOLOGY_FINTECH'
   | 'ENERGY_INFRASTRUCTURE'
-  | 'HEALTHCARE_PHARMA';
+  | 'HEALTHCARE_PHARMA'
+  | 'EDUCATION_PHILANTHROPY';
 
 export type OperationalStatus =
   | 'ACTIVE'
@@ -31,6 +34,12 @@ export type OperationalStatus =
   | 'LIQUIDATED'
   | 'DEFUNCT'
   | 'REVITALIZED';
+
+export type VerificationLevel =
+  | 'VERIFIED_PRIMARY'        // Confirmed via official registry, court ruling, Gazette, or audited annual report
+  | 'VERIFIED_SECONDARY'      // Supported by credible financial press investigations (Reuters, Business Daily)
+  | 'MARKET_SPECULATION'      // Widespread industry rumor / unconfirmed public narrative (explicitly flagged)
+  | 'UNVERIFIED_CLAIM';       // Claim lacking public statutory evidence (explicitly disclosed)
 
 export type AutopsyCauseCategory =
   | 'GOVERNANCE_FRAUD'          // Insider lending, fraudulent book-cooking, embezzlement
@@ -111,6 +120,10 @@ export interface Asset {
   status: OperationalStatus;
   county: string;
   headquarters?: string;
+  coordinates?: { lat: number; lng: number };
+  googleMapsUrl?: string;
+  verificationLevel?: VerificationLevel;
+  verificationNotes?: string;
   establishedYear: number;
   defunctYear?: number;
   currentValuationKES?: number;
@@ -122,6 +135,40 @@ export interface Asset {
   valuationHistory: ValuationPoint[];
   primaryCitations: Citation[];
   metadata?: Record<string, any>;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type PlayerType =
+  | 'EPC_CONSTRUCTION_GIANT'
+  | 'INDUSTRIAL_CONGLOMERATE'
+  | 'PRIVATE_EQUITY_INVESTMENT'
+  | 'EDUCATIONAL_FOUNDATION_TRUST'
+  | 'SOVEREIGN_WEALTH_PENSION';
+
+export interface HoldingItem {
+  assetName: string;
+  assetSlug?: string;
+  stakeOrRole: string;
+  verificationLevel: VerificationLevel;
+  notes?: string;
+}
+
+export interface InstitutionalPlayer {
+  id: string;
+  slug: string;
+  name: string;
+  playerType: PlayerType;
+  leadership: string;
+  headquarters: string;
+  estimatedCapitalMovedKES: number;
+  verificationLevel: VerificationLevel;
+  verificationNotes?: string;
+  keyHoldings: HoldingItem[];
+  activeFocusPresent: string;
+  summary: string;
+  citations: Citation[];
+  googleMapsUrl?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -144,5 +191,6 @@ export interface AssetFilterOptions {
   status?: OperationalStatus | 'ALL';
   county?: string;
   cause?: AutopsyCauseCategory | 'ALL';
+  verification?: VerificationLevel | 'ALL';
   search?: string;
 }

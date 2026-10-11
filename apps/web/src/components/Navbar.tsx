@@ -58,6 +58,13 @@ export function Navbar() {
                 Sovereign & PPP
               </Link>
               <Link
+                href="/players"
+                className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
+              >
+                <BarChart3 className="w-4 h-4 text-purple-400" />
+                Power Players
+              </Link>
+              <Link
                 href="/sources"
                 className="px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-surface transition-colors flex items-center gap-1.5"
               >

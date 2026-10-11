@@ -88,6 +88,20 @@ export default async function AssetDetailPage({ params }: AssetDetailPageProps) 
                 <MapPin className="w-3.5 h-3.5 text-slate-500" />
                 {asset.county}
               </span>
+              {asset.googleMapsUrl && (
+                <>
+                  <span>•</span>
+                  <a
+                    href={asset.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-cyan-950/40 text-cyan-400 border border-cyan-800/60 font-mono hover:bg-cyan-900/50 hover:text-cyan-300 transition-colors"
+                  >
+                    <MapPin className="w-3 h-3" />
+                    <span>View on Google Maps ↗</span>
+                  </a>
+                </>
+              )}
               <span>•</span>
               <span className="flex items-center gap-1 text-slate-300">
                 <Calendar className="w-3.5 h-3.5 text-slate-500" />

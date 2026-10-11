@@ -6,6 +6,10 @@ import { Asset, AssetFilterOptions, MacroMetrics, AutopsyReport } from '@salaman
 
 export * from './schema';
 export * from './seed-data';
+export * from './seed/institutional-players';
+
+import { INSTITUTIONAL_PLAYERS } from './seed/institutional-players';
+import { InstitutionalPlayer } from '@salamanda/shared-types';
 
 const connectionString = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL || '';
 
@@ -73,4 +77,13 @@ export async function getAutopsies(): Promise<{ asset: Asset; autopsy: AutopsyRe
     asset: a,
     autopsy: a.autopsy!,
   }));
+}
+
+export async function getInstitutionalPlayers(): Promise<InstitutionalPlayer[]> {
+  return INSTITUTIONAL_PLAYERS;
+}
+
+export async function getInstitutionalPlayerBySlug(slug: string): Promise<InstitutionalPlayer | null> {
+  const player = INSTITUTIONAL_PLAYERS.find((p) => p.slug === slug);
+  return player || null;
 }
