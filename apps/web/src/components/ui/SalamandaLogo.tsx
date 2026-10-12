@@ -14,8 +14,8 @@ export function SalamandaLogo({ className = '', size = 32 }: LogoProps) {
     <span className={`inline-flex items-center gap-2 shrink-0 ${className}`} role="img" aria-label="Salamanda">
       <svg
         width={size}
-        height={size * 1.22}
-        viewBox="360 195 520 600"
+        height={size * (590 / 487)}
+        viewBox="379 200 487 590"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
         focusable="false"
