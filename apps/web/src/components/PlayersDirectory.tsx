@@ -10,6 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import { formatKES } from '../lib/formatters';
+import { rankSearchResults } from '../lib/search-ranking';
 
 interface PlayersDirectoryProps {
   initialPlayers: InstitutionalPlayer[];
@@ -20,17 +21,23 @@ export function PlayersDirectory({ initialPlayers, initialQuery = '' }: PlayersD
   const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState<InstitutionalPlayer | null>(null);
 
-  const filtered = useMemo(() => {
-    if (!query) return initialPlayers;
-    const q = query.toLowerCase();
-    return initialPlayers.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        (p.leadership && p.leadership.toLowerCase().includes(q)) ||
-        p.keyHoldings.some((h) => h.assetName.toLowerCase().includes(q)) ||
-        p.playerType.toLowerCase().includes(q)
-    );
-  }, [initialPlayers, query]);
+  const filtered = useMemo(
+    () =>
+      rankSearchResults(
+        initialPlayers,
+        query,
+        (player) => [
+          { text: player.name, weight: 14 },
+          { text: (player.aliases ?? []).join(' '), weight: 12 },
+          { text: player.leadership, weight: 7 },
+          { text: player.keyHoldings.map((holding) => holding.assetName).join(' '), weight: 7 },
+          { text: `${player.playerType} ${player.headquarters}`, weight: 5 },
+          { text: `${player.activeFocusPresent} ${player.summary}`, weight: 2 },
+        ],
+        (player) => player.name,
+      ),
+    [initialPlayers, query],
+  );
 
   const getInitials = (name: string) => {
     const words = name.trim().split(/\s+/);
@@ -101,7 +108,7 @@ export function PlayersDirectory({ initialPlayers, initialQuery = '' }: PlayersD
               <div className="holdings">
                 <span className="detail-label">KEY HOLDINGS / INTERESTS</span>
                 <p>
-                  {p.keyHoldings.map((h) => h.assetName).join(' · ') || 'Industrial holdings'}
+                  {p.keyHoldings.map((h) => h.assetName).join(' · ') || 'No equity holdings disclosed in cited sources.'}
                 </p>
               </div>
 
@@ -133,7 +140,7 @@ export function PlayersDirectory({ initialPlayers, initialQuery = '' }: PlayersD
           <Search size={24} className="mx-auto text-muted-foreground mb-2" />
           <h3 className="text-sm font-semibold text-foreground">No matching institutional profiles</h3>
           <p className="text-xs text-muted-foreground mt-1">
-            Try searching for Narendra Raval, Jaswant Rai, Vimal Shah, CRBC, or Kenyatta Family.
+            Try KDC, KCB, KenGen, Centum, CRBC, or search by a leader or holding.
           </p>
         </div>
       )}

@@ -3,15 +3,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, X, ArrowUpRight, MapPin, Building2, ShieldCheck } from 'lucide-react';
+import type { Asset, InstitutionalPlayer } from '@salamanda/shared-types';
 import { formatKES, formatSectorLabel } from '../lib/formatters';
+import { rankSearchResults, SearchField } from '../lib/search-ranking';
 
 interface SearchResult {
   id: string;
-  slug: string;
   name: string;
   type: 'asset' | 'player';
   detail: string;
-  searchTerms?: string;
+  searchFields: SearchField[];
   destination: string;
   status?: string;
   valuationKES?: number;
@@ -26,66 +27,85 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [allAssets, setAllAssets] = useState<SearchResult[]>([]);
+  const [catalog, setCatalog] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
-      if (allAssets.length === 0) {
+      if (catalog.length === 0) {
         setLoading(true);
-        Promise.all([fetch('/api/assets'), fetch('/api/players')])
-          .then(async ([assetResponse, playerResponse]) => {
-            const [assetData, playerData] = await Promise.all([
-              assetResponse.json(),
-              playerResponse.json(),
-            ]);
-            const assets: SearchResult[] = (assetData?.data ?? []).map((a: any) => ({
-              id: a.id,
-              slug: a.slug,
-              name: a.name,
+        setLoadError('');
+        const loadAssets = fetch('/api/assets').then((response) => {
+          if (!response.ok) throw new Error('Asset index unavailable');
+          return response.json() as Promise<{ data?: Asset[] }>;
+        });
+        const loadPlayers = fetch('/api/players').then((response) => {
+          if (!response.ok) throw new Error('Player index unavailable');
+          return response.json() as Promise<{ data?: InstitutionalPlayer[] }>;
+        });
+
+        Promise.allSettled([loadAssets, loadPlayers])
+          .then(([assetResult, playerResult]) => {
+            if (assetResult.status === 'rejected' && playerResult.status === 'rejected') {
+              throw new Error('Search indexes unavailable');
+            }
+            const assets: SearchResult[] = (assetResult.status === 'fulfilled'
+              ? assetResult.value.data ?? []
+              : []
+            ).map((asset) => ({
+              id: asset.id,
+              name: asset.name,
               type: 'asset',
-              detail: `${formatSectorLabel(a.sector)} · ${a.county}`,
-              destination: `/assets/${a.slug}`,
-              status: a.status,
-              valuationKES: a.currentValuationKES || a.peakValuationKES || 0,
+              detail: `${formatSectorLabel(asset.sector)} · ${asset.county}`,
+              searchFields: [
+                { text: asset.name, weight: 14 },
+                { text: asset.legalName ?? '', weight: 12 },
+                { text: asset.slug.replace(/-/g, ' '), weight: 9 },
+                { text: `${asset.sector} ${asset.subsector} ${asset.county}`, weight: 5 },
+                { text: asset.status, weight: 3 },
+              ],
+              destination: `/assets/${asset.slug}`,
+              status: asset.status,
+              valuationKES: asset.currentValuationKES || asset.peakValuationKES || 0,
             }));
-            const players: SearchResult[] = (playerData?.data ?? []).map((p: any) => ({
-              id: p.id,
-              slug: p.slug,
-              name: p.name,
+            const players: SearchResult[] = (playerResult.status === 'fulfilled'
+              ? playerResult.value.data ?? []
+              : []
+            ).map((player) => ({
+              id: player.id,
+              name: player.name,
               type: 'player',
-              detail: `${p.playerType.replace(/_/g, ' ')} · ${p.headquarters}`,
-              searchTerms: `${p.leadership} ${p.keyHoldings.map((holding: { assetName: string }) => holding.assetName).join(' ')}`,
-              destination: `/players?search=${encodeURIComponent(p.name)}`,
+              detail: `${player.playerType.replace(/_/g, ' ')} · ${player.headquarters}`,
+              searchFields: [
+                { text: player.name, weight: 14 },
+                { text: (player.aliases ?? []).join(' '), weight: 12 },
+                { text: player.slug.replace(/-/g, ' '), weight: 9 },
+                { text: player.leadership, weight: 7 },
+                { text: player.keyHoldings.map((holding) => holding.assetName).join(' '), weight: 7 },
+                { text: `${player.playerType} ${player.headquarters}`, weight: 5 },
+                { text: `${player.activeFocusPresent} ${player.summary}`, weight: 2 },
+              ],
+              destination: `/players?search=${encodeURIComponent(player.name)}`,
             }));
-            const catalog = [...assets, ...players];
-            setAllAssets(catalog);
-            setResults(catalog.slice(0, 8));
+            setCatalog([...assets, ...players]);
           })
-          .catch((err) => console.error('Failed to load search catalog:', err))
+          .catch((error) => {
+            console.error('Failed to load search catalog:', error);
+            setLoadError('Search is temporarily unavailable. Please try again.');
+          })
           .finally(() => setLoading(false));
-      } else {
-        setResults(allAssets.slice(0, 8));
       }
     }
-  }, [isOpen]);
+  }, [isOpen, catalog.length]);
 
   useEffect(() => {
-    if (!query.trim()) {
-      setResults(allAssets.slice(0, 8));
-      return;
-    }
-    const q = query.toLowerCase();
-    const filtered = allAssets.filter(
-      (a) =>
-        a.name.toLowerCase().includes(q) ||
-        a.detail.toLowerCase().includes(q) ||
-        a.searchTerms?.toLowerCase().includes(q)
+    setResults(
+      rankSearchResults(catalog, query, (result) => result.searchFields, (result) => result.name, 8),
     );
-    setResults(filtered.slice(0, 8));
-  }, [query, allAssets]);
+  }, [query, catalog]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -139,6 +159,8 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
             <div className="p-8 text-center text-xs text-muted-foreground">
               Loading intelligence catalog...
             </div>
+          ) : loadError ? (
+            <div className="p-8 text-center text-xs text-muted-foreground">{loadError}</div>
           ) : results.length > 0 ? (
             results.map((r) => (
               <button
@@ -188,7 +210,7 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
 
         {/* Modal Footer */}
         <div className="px-4 py-2 border-t border-border bg-muted/20 flex items-center justify-between text-[10px] text-muted-foreground">
-          <span>{allAssets.length} economic records and power-player profiles</span>
+          <span>{catalog.length} economic records and power-player profiles</span>
           <span className="flex items-center gap-1">
             <ShieldCheck size={11} className="text-primary" />
             Audited Kenyan filings

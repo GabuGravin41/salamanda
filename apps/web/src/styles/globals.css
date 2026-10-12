@@ -603,6 +603,7 @@ body {
   .overview-grid { grid-template-columns: 1fr; }
   .intelligence-rail { border-left: none; padding-left: 0; margin-top: 24px; }
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .profile-grid, .verification-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metric:nth-child(2) { border-right: none; }
   .metric:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
 }
@@ -613,6 +614,9 @@ body {
   .metric:last-child { border-bottom: none; }
   .page-content { padding: 20px 16px; }
   .topbar { padding: 0 16px; }
+  .collection-toolbar { flex-wrap: wrap; gap: 12px; }
+  .collection-toolbar .search-input { width: 100%; max-width: none; }
+  .profile-grid, .verification-grid { grid-template-columns: 1fr; }
 }
 
 /* Institutional Collections, Cards & Autopsy Layouts */
@@ -638,6 +642,7 @@ body {
 }
 
 .research-card {
+  min-width: 0;
   padding: 24px;
   background: var(--card);
   border: 1px solid var(--border);

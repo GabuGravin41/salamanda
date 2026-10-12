@@ -145,7 +145,10 @@ export type PlayerType =
   | 'DYNASTIC_FAMILY_CONGLOMERATE'
   | 'PRIVATE_EQUITY_INVESTMENT'
   | 'EDUCATIONAL_FOUNDATION_TRUST'
-  | 'SOVEREIGN_WEALTH_PENSION';
+  | 'SOVEREIGN_WEALTH_PENSION'
+  | 'DEVELOPMENT_FINANCE_INSTITUTION'
+  | 'FINANCIAL_SERVICES_GROUP'
+  | 'PUBLIC_LISTED_ENTERPRISE';
 
 export interface HoldingItem {
   assetName: string;
@@ -159,6 +162,7 @@ export interface InstitutionalPlayer {
   id: string;
   slug: string;
   name: string;
+  aliases?: string[];
   playerType: PlayerType;
   leadership: string;
   headquarters: string;

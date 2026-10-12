@@ -6,6 +6,7 @@ export const INSTITUTIONAL_PLAYERS: InstitutionalPlayer[] = [
     id: 'plr-centum-investment',
     slug: 'centum-investment-plc',
     name: 'Centum Investment Company PLC',
+    aliases: ['Centum', 'Centum RE', 'Centum Investment'],
     playerType: 'PRIVATE_EQUITY_INVESTMENT',
     leadership: 'Dr. James Mwangi (Chairman), Kenneth Mbae (MD Centum RE), Late Chris Kirubi (Patriarch)',
     headquarters: 'South Tower, Two Rivers, Limuru Road, Nairobi',
@@ -511,6 +512,121 @@ export const INSTITUTIONAL_PLAYERS: InstitutionalPlayer[] = [
     ],
     createdAt: '2026-10-11T00:00:00Z',
     updatedAt: '2026-10-11T00:00:00Z',
+  },
+
+  // 11. Kenya Development Corporation
+  {
+    id: 'plr-kenya-development-corporation',
+    slug: 'kenya-development-corporation',
+    name: 'Kenya Development Corporation Ltd.',
+    aliases: ['KDC', 'ICDC', 'IDB Capital', 'Tourism Finance Corporation'],
+    playerType: 'DEVELOPMENT_FINANCE_INSTITUTION',
+    leadership: 'Government of Kenya development finance institution; board and executive leadership',
+    headquarters: 'Uchumi House, Aga Khan Walk, Nairobi',
+    estimatedCapitalMovedKES: 0,
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes: 'KDC describes itself as Kenya’s cross-sector DFI, formed by merging ICDC, Tourism Finance Corporation, and IDB Capital. No capital estimate is published in the cited profile.',
+    activeFocusPresent:
+      'Providing long-term development and infrastructure finance, business support, and advisory services to medium and large enterprises across priority sectors.',
+    summary:
+      'Kenya’s cross-sector development finance institution. Established in 2020 through the merger of Industrial and Commercial Development Corporation, Tourism Finance Corporation, and IDB Capital Limited to consolidate public development-finance capacity.',
+    keyHoldings: [],
+    citations: [
+      {
+        id: 'cit-kdc-01',
+        title: 'Who We Are',
+        publisher: 'Kenya Development Corporation',
+        publicationDate: '2020-11-27',
+        url: 'https://kdc.go.ke/about-us/who-we-are',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'KDC is Kenya’s cross-sector development finance institution, formed through the merger of IDB Capital, Tourism Finance Corporation, and ICDC.',
+      },
+    ],
+    createdAt: '2026-10-12T00:00:00Z',
+    updatedAt: '2026-10-12T00:00:00Z',
+  },
+
+  // 12. Kenya Electricity Generating Company
+  {
+    id: 'plr-kengen',
+    slug: 'kengen',
+    name: 'Kenya Electricity Generating Company PLC (KenGen)',
+    aliases: ['KenGen', 'Kenya Electricity Generating Company', 'KEGN'],
+    playerType: 'PUBLIC_LISTED_ENTERPRISE',
+    leadership: 'Board and executive management; listed on the Nairobi Securities Exchange',
+    headquarters: 'KenGen Pension Plaza II, Kolobot Road, Parklands, Nairobi',
+    estimatedCapitalMovedKES: 0,
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes: 'Company profile confirms its 1998 formation as KenGen and NSE listing in 2006. No KES capital figure is inferred from generation capacity.',
+    activeFocusPresent:
+      'Generating electricity from hydro, geothermal, wind, and thermal sources, while developing renewable generation and geothermal services in the region.',
+    summary:
+      'Kenya’s publicly listed electricity-generation company, established in 1954 and focused exclusively on power generation since 1998. The company reports 1,786 MW installed capacity across hydro, geothermal, wind, and thermal generation.',
+    keyHoldings: [
+      {
+        assetName: 'KenGen generation portfolio',
+        stakeOrRole: 'Owns and operates power plants across five regions; 1,786 MW installed capacity',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'Generation sources include hydro, geothermal, wind, and thermal power.',
+      },
+    ],
+    citations: [
+      {
+        id: 'cit-kengen-01',
+        title: 'About Us',
+        publisher: 'Kenya Electricity Generating Company PLC',
+        publicationDate: '2026-10-12',
+        url: 'https://www.kengen.co.ke/about-us/',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'KenGen was established in 1954, listed on the NSE in 2006, and reports 1,786 MW installed capacity across hydro, geothermal, wind, and thermal generation.',
+      },
+    ],
+    createdAt: '2026-10-12T00:00:00Z',
+    updatedAt: '2026-10-12T00:00:00Z',
+  },
+
+  // 13. KCB Group
+  {
+    id: 'plr-kcb-group',
+    slug: 'kcb-group',
+    name: 'KCB Group PLC',
+    aliases: ['KCB', 'KCB Group', 'Kenya Commercial Bank'],
+    playerType: 'FINANCIAL_SERVICES_GROUP',
+    leadership: 'Board and executive management',
+    headquarters: 'Nairobi, Kenya',
+    estimatedCapitalMovedKES: 2300000000000,
+    verificationLevel: 'VERIFIED_PRIMARY',
+    verificationNotes: 'Company-published profile describes KCB Group as a non-operating holding company and reports a KES 2.3 trillion group asset base; this figure is not presented as market capitalization.',
+    activeFocusPresent:
+      'Overseeing banking and financial-services subsidiaries across East and Central Africa, including banking, investment banking, bancassurance, corporate trustee, and foundation operations.',
+    summary:
+      'A Nairobi Securities Exchange-listed, non-operating holding company for KCB Bank Kenya and regional banking subsidiaries. The group also identifies investment banking, bancassurance, corporate trustee, and foundation businesses among its operations.',
+    keyHoldings: [
+      {
+        assetName: 'KCB Bank Kenya and regional banking subsidiaries',
+        stakeOrRole: 'Banking operations overseen by the listed group holding company',
+        verificationLevel: 'VERIFIED_PRIMARY',
+        notes: 'The group lists operations in Kenya, Uganda, Tanzania, Rwanda, Burundi, South Sudan, and the Democratic Republic of Congo.',
+      },
+      {
+        assetName: 'KCB Investment Bank, Bancassurance, and Corporate Trustee',
+        stakeOrRole: 'Group financial-services subsidiaries',
+        verificationLevel: 'VERIFIED_PRIMARY',
+      },
+    ],
+    citations: [
+      {
+        id: 'cit-kcb-01',
+        title: 'Investor Relations',
+        publisher: 'KCB Group PLC',
+        publicationDate: '2026-10-12',
+        url: 'https://www.kcbgroup.com/investor-relations/',
+        tier: 'REGULATORY_DISCLOSURE',
+        keyExcerpt: 'KCB Group describes itself as a non-operating holding company overseeing KCB Bank Kenya and regional subsidiaries, and reports a group asset base of KES 2.3 trillion.',
+      },
+    ],
+    createdAt: '2026-10-12T00:00:00Z',
+    updatedAt: '2026-10-12T00:00:00Z',
   },
 ];
 
