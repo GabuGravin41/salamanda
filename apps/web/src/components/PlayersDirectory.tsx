@@ -13,10 +13,11 @@ import { formatKES } from '../lib/formatters';
 
 interface PlayersDirectoryProps {
   initialPlayers: InstitutionalPlayer[];
+  initialQuery?: string;
 }
 
-export function PlayersDirectory({ initialPlayers }: PlayersDirectoryProps) {
-  const [query, setQuery] = useState('');
+export function PlayersDirectory({ initialPlayers, initialQuery = '' }: PlayersDirectoryProps) {
+  const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState<InstitutionalPlayer | null>(null);
 
   const filtered = useMemo(() => {
@@ -144,7 +145,7 @@ export function PlayersDirectory({ initialPlayers }: PlayersDirectoryProps) {
           onClick={() => setSelected(null)}
         >
           <div
-            className="bg-card text-card-foreground border border-border rounded-lg shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 space-y-5"
+            className="glass-panel bg-card text-card-foreground border border-border rounded-lg shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">

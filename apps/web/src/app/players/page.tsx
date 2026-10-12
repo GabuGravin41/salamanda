@@ -4,8 +4,15 @@ import { PlayersDirectory } from '../../components/PlayersDirectory';
 
 export const revalidate = 60;
 
-export default async function PlayersPage() {
-  const players = await getInstitutionalPlayers();
+interface PlayersPageProps {
+  searchParams: Promise<{ search?: string }>;
+}
+
+export default async function PlayersPage({ searchParams }: PlayersPageProps) {
+  const [players, params] = await Promise.all([
+    getInstitutionalPlayers(),
+    searchParams,
+  ]);
 
   return (
     <div className="space-y-6">
@@ -17,7 +24,7 @@ export default async function PlayersPage() {
         </div>
       </div>
 
-      <PlayersDirectory initialPlayers={players} />
+      <PlayersDirectory initialPlayers={players} initialQuery={params.search} />
     </div>
   );
 }

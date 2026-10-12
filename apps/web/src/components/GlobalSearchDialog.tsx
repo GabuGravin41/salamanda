@@ -4,15 +4,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, X, ArrowUpRight, MapPin, Building2, ShieldCheck } from 'lucide-react';
 import { formatKES, formatSectorLabel } from '../lib/formatters';
-import { Sector } from '@salamanda/shared-types';
 
 interface SearchResult {
   id: string;
   slug: string;
   name: string;
-  sector: Sector;
-  county: string;
-  status: string;
+  type: 'asset' | 'player';
+  detail: string;
+  searchTerms?: string;
+  destination: string;
+  status?: string;
   valuationKES?: number;
 }
 
@@ -34,22 +35,34 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
       setTimeout(() => inputRef.current?.focus(), 50);
       if (allAssets.length === 0) {
         setLoading(true);
-        fetch('/api/assets')
-          .then((res) => res.json())
-          .then((data) => {
-            if (data?.data) {
-              const mapped = data.data.map((a: any) => ({
-                id: a.id,
-                slug: a.slug,
-                name: a.name,
-                sector: a.sector,
-                county: a.county,
-                status: a.status,
-                valuationKES: a.currentValuationKES || a.peakValuationKES || 0,
-              }));
-              setAllAssets(mapped);
-              setResults(mapped.slice(0, 8));
-            }
+        Promise.all([fetch('/api/assets'), fetch('/api/players')])
+          .then(async ([assetResponse, playerResponse]) => {
+            const [assetData, playerData] = await Promise.all([
+              assetResponse.json(),
+              playerResponse.json(),
+            ]);
+            const assets: SearchResult[] = (assetData?.data ?? []).map((a: any) => ({
+              id: a.id,
+              slug: a.slug,
+              name: a.name,
+              type: 'asset',
+              detail: `${formatSectorLabel(a.sector)} · ${a.county}`,
+              destination: `/assets/${a.slug}`,
+              status: a.status,
+              valuationKES: a.currentValuationKES || a.peakValuationKES || 0,
+            }));
+            const players: SearchResult[] = (playerData?.data ?? []).map((p: any) => ({
+              id: p.id,
+              slug: p.slug,
+              name: p.name,
+              type: 'player',
+              detail: `${p.playerType.replace(/_/g, ' ')} · ${p.headquarters}`,
+              searchTerms: `${p.leadership} ${p.keyHoldings.map((holding: { assetName: string }) => holding.assetName).join(' ')}`,
+              destination: `/players?search=${encodeURIComponent(p.name)}`,
+            }));
+            const catalog = [...assets, ...players];
+            setAllAssets(catalog);
+            setResults(catalog.slice(0, 8));
           })
           .catch((err) => console.error('Failed to load search catalog:', err))
           .finally(() => setLoading(false));
@@ -68,8 +81,8 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
     const filtered = allAssets.filter(
       (a) =>
         a.name.toLowerCase().includes(q) ||
-        a.county.toLowerCase().includes(q) ||
-        a.sector.toLowerCase().includes(q)
+        a.detail.toLowerCase().includes(q) ||
+        a.searchTerms?.toLowerCase().includes(q)
     );
     setResults(filtered.slice(0, 8));
   }, [query, allAssets]);
@@ -92,7 +105,7 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
       onClick={onClose}
     >
       <div
-        className="bg-card text-card-foreground border border-border rounded-lg shadow-2xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+        className="glass-panel bg-card text-card-foreground border border-border rounded-lg shadow-2xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in-95 duration-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
@@ -102,7 +115,7 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search assets, sectors, counties, and autopsies…"
+            placeholder="Search assets, people, sectors, and counties…"
             aria-label="Search intelligence catalog"
             className="w-full bg-transparent border-0 outline-none text-xs text-foreground placeholder:text-muted-foreground"
           />
@@ -133,7 +146,7 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
                 type="button"
                 onClick={() => {
                   onClose();
-                  router.push(`/assets/${r.slug}`);
+                  router.push(r.destination);
                 }}
                 className="w-full flex items-center justify-between p-3.5 hover:bg-muted/60 transition-colors text-left group"
               >
@@ -143,16 +156,12 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
                       {r.name}
                     </strong>
                     <span className="text-[9px] px-1.5 py-0.2 rounded border border-border bg-card text-muted-foreground">
-                      {r.status.replace(/_/g, ' ')}
+                      {r.type === 'player' ? 'POWER PLAYER' : r.status?.replace(/_/g, ' ')}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                    <span>{formatSectorLabel(r.sector)}</span>
-                    <span>·</span>
-                    <span className="flex items-center gap-0.5">
-                      <MapPin size={9} />
-                      {r.county}
-                    </span>
+                    {r.type === 'asset' ? <MapPin size={9} /> : <Building2 size={9} />}
+                    <span>{r.detail}</span>
                     {r.valuationKES ? (
                       <>
                         <span>·</span>
@@ -172,14 +181,14 @@ export function GlobalSearchDialog({ isOpen, onClose }: GlobalSearchDialogProps)
             ))
           ) : (
             <div className="p-8 text-center text-xs text-muted-foreground">
-              No matching assets found for "{query}".
+              No matching records found for "{query}".
             </div>
           )}
         </div>
 
         {/* Modal Footer */}
         <div className="px-4 py-2 border-t border-border bg-muted/20 flex items-center justify-between text-[10px] text-muted-foreground">
-          <span>{allAssets.length} total verified economic records indexed</span>
+          <span>{allAssets.length} economic records and power-player profiles</span>
           <span className="flex items-center gap-1">
             <ShieldCheck size={11} className="text-primary" />
             Audited Kenyan filings

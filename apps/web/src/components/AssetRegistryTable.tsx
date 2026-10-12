@@ -522,7 +522,7 @@ export function AssetRegistryTable({
           onClick={() => setSelectedAsset(null)}
         >
           <div
-            className="bg-card text-card-foreground border border-border rounded-lg shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 space-y-5"
+            className="glass-panel bg-card text-card-foreground border border-border rounded-lg shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}

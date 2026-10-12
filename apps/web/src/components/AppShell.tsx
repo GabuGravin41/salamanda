@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -14,7 +13,6 @@ import {
   ShieldCheck,
   Search,
   Menu,
-  ChevronDown,
   Globe2,
   ExternalLink,
   MapPin,
@@ -22,12 +20,11 @@ import {
   Bell,
   Settings2,
   CircleHelp,
-  Check,
   X,
-  Database,
 } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { GlobalSearchDialog } from './GlobalSearchDialog';
+import { SalamandaLogo } from './ui/SalamandaLogo';
 
 const primaryNavigation = [
   { label: 'Overview', href: '/', icon: LayoutDashboard },
@@ -49,7 +46,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [modalType, setModalType] = useState<'notifications' | 'settings' | 'help' | null>(null);
+  const [modalType, setModalType] = useState<'notifications' | 'settings' | 'help' | 'profile' | null>(null);
+  const [profileName, setProfileName] = useState('Research Session');
+  const [profileNameDraft, setProfileNameDraft] = useState('Research Session');
 
   // Keyboard shortcut listener for Cmd+K and /
   useEffect(() => {
@@ -66,6 +65,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    try {
+      const savedName = localStorage.getItem('salamanda-profile-name');
+      if (savedName) {
+        setProfileName(savedName);
+        setProfileNameDraft(savedName);
+      }
+    } catch {}
+  }, []);
+
+  const profileInitial = profileName.trim().charAt(0).toUpperCase() || 'S';
+
+  const saveProfile = () => {
+    const savedName = profileNameDraft.trim() || 'Research Session';
+    setProfileName(savedName);
+    setProfileNameDraft(savedName);
+    try {
+      localStorage.setItem('salamanda-profile-name', savedName);
+    } catch {}
+  };
+
   const allNav = [...primaryNavigation, ...researchNavigation];
   const currentNav =
     allNav.find((n) => n.href === pathname)?.label || 'Intelligence Workspace';
@@ -75,7 +95,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-20 md:hidden"
+          className="fixed inset-0 bg-black/40 z-20 lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
@@ -83,31 +103,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Institutional Left Sidebar */}
       <aside
         className={`sidebar ${
-          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } transition-transform duration-200`}
       >
         <Link href="/" className="brand" onClick={() => setMobileMenuOpen(false)}>
-          <Image
-            src="/logo.png"
-            alt="Salamanda Logo"
-            width={26}
-            height={26}
-            className="rounded-sm object-contain"
-          />
-          <span>
-            salamanda<span className="brand-period">.</span>
-          </span>
+          <SalamandaLogo size={34} />
         </Link>
 
         {/* Market Workspace Indicator */}
-        <div className="workspace-label">
+        <button
+          type="button"
+          className="workspace-label workspace-label-button"
+          onClick={() => setModalType('settings')}
+          aria-label="Open workspace settings"
+        >
           <span className="workspace-symbol">KE</span>
           <div>
             <strong>Kenya Intelligence</strong>
             <span>Active Neon DB · Live</span>
           </div>
-          <ChevronDown size={14} className="text-muted-foreground ml-auto" />
-        </div>
+          <Settings2 size={14} className="text-muted-foreground ml-auto" />
+        </button>
 
         {/* Primary Navigation */}
         <div className="nav-label">WORKSPACE</div>
@@ -172,7 +188,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 S
               </span>
               <div className="text-left">
-                <strong className="block text-[11px] leading-tight">Research Session</strong>
+                <strong className="block text-[11px] leading-tight">{profileName}</strong>
                 <span className="text-[9px] text-muted-foreground">Reporting: KES</span>
               </div>
             </div>
@@ -187,7 +203,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              className="md:hidden p-1.5 text-muted-foreground hover:text-foreground"
+              className="lg:hidden p-1.5 text-muted-foreground hover:text-foreground"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation"
             >
@@ -231,12 +247,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {/* Profile Avatar Trigger */}
             <button
               type="button"
-              onClick={() => setModalType('settings')}
+              onClick={() => {
+                setProfileNameDraft(profileName);
+                setModalType('profile');
+              }}
               className="w-7 h-7 rounded border border-border bg-card hover:bg-muted text-foreground text-xs font-bold grid place-items-center transition-colors"
-              title="Workspace settings"
-              aria-label="Workspace settings"
+              title="Researcher profile"
+              aria-label={`Open researcher profile for ${profileName}`}
             >
-              S
+              {profileInitial}
             </button>
           </div>
         </header>
@@ -268,7 +287,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           onClick={() => setModalType(null)}
         >
           <div
-            className="bg-card text-card-foreground border border-border rounded-lg shadow-xl w-full max-w-md p-6 space-y-4"
+            className="glass-panel bg-card text-card-foreground border border-border rounded-lg shadow-xl w-full max-w-md p-6 space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between pb-2 border-b border-border">
@@ -277,6 +296,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   ? 'Recent Statutory Disclosures'
                   : modalType === 'settings'
                   ? 'Workspace Parameters'
+                  : modalType === 'profile'
+                  ? 'Researcher Profile'
                   : 'Primary Evidence Repositories'}
               </h3>
               <button
@@ -333,6 +354,36 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <strong className="text-foreground font-mono">Next.js 15 on Vercel</strong>
                 </div>
               </div>
+            ) : modalType === 'profile' ? (
+              <form
+                className="space-y-3 text-xs"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  saveProfile();
+                }}
+              >
+                <label htmlFor="profile-name" className="block font-medium text-foreground">
+                  Display name
+                </label>
+                <input
+                  id="profile-name"
+                  value={profileNameDraft}
+                  onChange={(event) => setProfileNameDraft(event.target.value)}
+                  maxLength={48}
+                  className="w-full px-3 py-2 rounded border border-border bg-background text-foreground"
+                />
+                <p className="text-muted-foreground">
+                  Saved in this browser. This workspace does not use account sign-in.
+                </p>
+                <div className="flex justify-end pt-2">
+                  <button
+                    type="submit"
+                    className="px-3 py-1.5 rounded bg-primary text-primary-foreground font-medium hover:opacity-90"
+                  >
+                    Save profile
+                  </button>
+                </div>
+              </form>
             ) : (
               <div className="space-y-2 text-xs">
                 {[
