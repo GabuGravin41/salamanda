@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "@salamanda/database": "workspace:*",
     "@salamanda/shared-types": "workspace:*",
-    "@neondatabase/serverless": "^0.10.4",
+    "@types/leaflet": "^1.9.22",
     "clsx": "^2.1.1",
+    "leaflet": "^1.9.4",
     "lucide-react": "^1.16.0",
     "next": "^15.1.0",
     "react": "^19.0.0",

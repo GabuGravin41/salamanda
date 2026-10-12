@@ -17,6 +17,7 @@ import {
   Users,
 } from 'lucide-react';
 import { AssetRegistryTable } from '../components/AssetRegistryTable';
+import { KenyaAssetMap } from '../components/KenyaAssetMap';
 
 export const revalidate = 60; // ISR cache revalidation
 
@@ -124,31 +125,9 @@ export default async function HomePage() {
               <span className="text-[10px] font-semibold text-primary">KENYA</span>
             </div>
 
-            {/* Schematic Vector Map */}
-            <div className="kenya-map">
-              <svg viewBox="0 0 300 230" role="img" aria-label="Kenya economic hubs">
-                <defs>
-                  <pattern id="grid" width="14" height="14" patternUnits="userSpaceOnUse">
-                    <path d="M14 0H0V14" fill="none" stroke="var(--border)" strokeWidth="0.5" />
-                  </pattern>
-                </defs>
-                <rect width="300" height="230" fill="url(#grid)" />
-                <path
-                  className="country-outline"
-                  d="M123 15L164 34L200 27L231 61L225 99L201 125L195 158L161 214L145 204L130 184L104 172L86 145L62 128L64 110L54 96L76 73L86 50L110 32Z"
-                />
-                <circle cx="125" cy="143" r="4" className="map-point" />
-                <text x="135" y="147" className="map-label">Nairobi</text>
-                <circle cx="161" cy="188" r="4" className="map-point" />
-                <text x="171" y="192" className="map-label">Mombasa</text>
-                <circle cx="82" cy="114" r="4" className="map-point" />
-                <text x="50" y="118" className="map-label">Kisumu</text>
-              </svg>
-            </div>
-
-            <div className="flex justify-between items-center text-[10px] text-muted-foreground pt-1 border-b border-border pb-2">
-              <span>Primary Corridor Coverage</span>
-              <span>8 Economic Sectors</span>
+            {/* Real Interactive Kenya Asset Map */}
+            <div className="mt-3">
+              <KenyaAssetMap assets={assets} compact={true} />
             </div>
           </section>
 

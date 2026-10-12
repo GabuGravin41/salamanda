@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Asset } from '@salamanda/shared-types';
 import {
@@ -120,10 +120,23 @@ export function AssetRegistryTable({
   const currentPage = Math.min(page, totalPages - 1);
   const rows = filtered.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
 
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('salamanda-saved-assets');
+      if (stored) {
+        setSavedSlugs(JSON.parse(stored));
+      }
+    } catch {}
+  }, []);
+
   const toggleSave = (slug: string) => {
-    setSavedSlugs((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
-    );
+    setSavedSlugs((prev) => {
+      const next = prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug];
+      try {
+        localStorage.setItem('salamanda-saved-assets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   };
 
   const exportCSV = () => {
